@@ -1,0 +1,62 @@
+// Growl
+
+.growl {
+  position: fixed;
+  top: $growl-top;
+  right: $growl-space-x;
+  left: $growl-space-x;
+  z-index: $zindex-growl;
+
+  &.growl-static {
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: auto;
+  }
+
+  .alert {
+    animation: slide-from-top 1000ms cubic-bezier(.2, .7, .5, 1);
+    margin-bottom: $growl-alert-margin-bottom;
+  }
+
+  .alert-dismissable,
+  .alert-dismissible {
+    .close {
+      color: $growl-alert-dismissable-color;
+      top: $growl-alert-dismissable-top;
+    }
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .growl {
+    left: auto;
+    width: $growl-width;
+  }
+}
+
+@keyframes slide-from-top {
+  0% {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-from-right {
+  0% {
+    transform: translateX(30%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

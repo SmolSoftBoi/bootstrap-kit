@@ -1,0 +1,12 @@
+// Dropdown
+
+.dropdown-menu {
+  padding-top: $dropdown-padding-y;
+  padding-bottom: $dropdown-padding-y;
+
+  > li {
+    > a {
+      padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+    }
+  }
+}

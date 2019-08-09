@@ -1,0 +1,34 @@
+// Card Bold
+
+.card-bold {
+  background-color: $card-bg;
+  border: 0;
+
+  &.card-primary {
+    background-color: $primary;
+  }
+
+  &.card-success {
+    background-color: $success;
+  }
+
+  &.card-info {
+    background-color: $info;
+  }
+
+  &.card-warning {
+    background-color: $warning;
+  }
+
+  &.card-danger {
+    background-color: $danger;
+  }
+
+  hr {
+    background: $card-bold-hr-color;
+  }
+
+  p {
+    color: $card-bold-color;
+  }
+}

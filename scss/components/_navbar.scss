@@ -1,0 +1,129 @@
+// Navbar
+
+.navbar {
+  // Nav Container Padding Fix
+  > .container-fluid {
+    margin-right: -$navbar-padding-x;
+    margin-left: -$navbar-padding-x;
+  }
+}
+
+// Fixed Top Navbar Padding
+.with-top-navbar {
+  padding-top: $nav-link-height;
+}
+
+.navbar-nav {
+  > li {
+    > a {
+      // Navbar Counters Fix
+      > .badge {
+        margin-left: $badge-padding-y;
+      }
+    }
+  }
+
+  > .active {
+    > a {
+      &,
+      &:focus,
+      &:hover {
+        font-weight: $navbar-nav-active-font-weight;
+      }
+    }
+  }
+}
+
+.navbar-brand {
+  > img {
+    vertical-align: text-top;
+  }
+}
+
+.navbar-brand-icon {
+  float: left;
+  margin-right: $navbar-padding-x * .3;
+}
+
+.navbar-default {
+  // Navbar Emphasized
+  .navbar-brand-emphasized {
+    &,
+    &:hover,
+    &:focus {
+      background-color: $navbar-border;
+    }
+  }
+}
+
+.navbar-dark {
+  // Navbar Emphasized
+  .navbar-brand-emphasized {
+    &,
+    &:hover,
+    &:focus {
+      color: $navbar-dark-brand-color;
+      background-color: $navbar-dark-brand-bg;
+    }
+  }
+
+  // Navbar Simple Form Control
+  .navbar-form-control {
+    background-color: lighten($navbar-dark-bg, 7%);
+
+    &:focus {
+      color: $navbar-dark-bg;
+      background-color: $navbar-dark-active-color;
+      box-shadow: 0 0 ($navbar-padding-x * .4) $navbar-dark-color;
+    }
+  }
+}
+
+.navbar-padded {
+  .navbar-header {
+    padding-right: $navbar-padding-x * .3;
+    padding-left: $navbar-padding-x * .3;
+  }
+}
+
+// Navbar Simple Form Control
+.navbar-form-control {
+  border: 0;
+  box-shadow: none;
+}
+
+@include media-breakpoint-up(sm) {
+  .navbar-padded {
+    padding-top: $spacer;
+    padding-bottom: $spacer;
+  }
+}
+
+.navbar-btn-avatar {
+  &,
+  &:active,
+  &:hover,
+  &:focus {
+    &:active,
+    &:focus {
+      padding: 0;
+      background: transparent;
+      border: 0;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  img {
+    width: $navbar-brand-height;
+    height: $navbar-brand-height;
+  }
+}
+
+// Header Port
+.navbar-header {
+  @include clearfix;
+  @include media-breakpoint-up(md) {
+    float: left;
+  }
+}

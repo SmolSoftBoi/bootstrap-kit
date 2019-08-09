@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "stylelint-config-rational-order",
+    "stylelint-config-standard",
+    "stylelint-config-twbs-bootstrap/scss"
+  ],
+  "rules": {
+    "scss/dollar-variable-default": null
+  }
+}

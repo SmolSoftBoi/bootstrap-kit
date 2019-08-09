@@ -1,0 +1,18 @@
+{
+  "name": "bootstrap-kit",
+  "description": "User interface and behaviour framework based on Bootstrap.",
+  "author": "Kristian Matthews",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "bootstrap": "^4.3.1",
+    "stylelint": "^10.1.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^18.3",
+    "stylelint-config-twbs-bootstrap": "^0.3.1",
+    "stylelint-order": "^3.0.1"
+  },
+  "scripts": {
+    "scss-lint": "stylelint \"scss/**/*.scss\" --cache"
+  }
+}

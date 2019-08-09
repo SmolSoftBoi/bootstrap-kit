@@ -1,2 +1,2 @@
-# bootstrap-kit
- User interface and behaviour framework based on Bootstrap.
+# Bootstrap Kit
+User interface and behaviour framework based on Bootstrap.

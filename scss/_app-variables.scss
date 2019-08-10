@@ -1,0 +1,185 @@
+// App
+
+// Gray Scale
+$gray-100: #f5f8fa;
+$gray-200: #d4dbe0;
+$gray-300: #9da9b0;
+$gray-500: #536570;
+$gray-700: #1e3948;
+$gray-800: #122a38;
+
+
+// Brand Scale
+$theme-colors: (
+  primary: #3097d1,
+  secondary: $gray-200,
+  success: #5cb85c,
+  info: #5bc0de,
+  warning: #f0ad4e,
+  danger: #d9534f,
+  light: $gray-100,
+  dark: $gray-800
+);
+
+
+// Kit Variables
+@import "variables";
+
+
+$font-family-serif: georgia, "Times New Roman", times, serif !default;
+$font-size-xs: .75rem !default;
+$nav-tabs-active-link-hover-bg: $body-bg !default;
+
+
+// Body
+$body-bg: #f5f8fa;
+
+
+// Component Borders
+$toolkit-border-color:  darken(#f5f8fa, 10%);
+$panel-default-border:  $toolkit-border-color;
+$panel-inner-border:    $toolkit-border-color;
+$panel-footer-bg:       $body-bg;
+$list-group-border:     $toolkit-border-color;
+$navbar-border:         $toolkit-border-color;
+
+
+// Link & Button Colors
+$link-color: $primary;
+
+
+// Alerts
+$alert-warning-border: #e6d0a1;
+
+
+// Text Color
+$font-family-sans-serif: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+$font-family-base:       $font-family-sans-serif;
+$text-color:             $gray-700;
+$letter-spacing-base:    0;
+$line-height-base:       1.6;
+$font-weight-base:       $font-weight-light;
+
+
+// Main typography
+$font-size-root: $font-size-base * .9;
+
+
+// Lead
+$lead-font-size:      floor(($font-size-base * 1.15));
+$lead-font-size-sm:   floor(($font-size-base * 1.5));
+$lead-font-weight:    $font-weight-light;
+$lead-line-height:    1.4;
+$lead-letter-spacing: 0;
+
+
+// Headings
+$headings-font-weight: 600;
+$headings-line-height: 1.2;
+
+
+// Buttons
+$btn-font-size:          $font-size-base;
+$btn-text-transform:     default;
+$btn-letter-spacing:     none;
+$btn-default-color:      #536570;
+$btn-default-bg:         $white;
+$btn-default-border:     #d4dbe0;
+$btn-toolbar-divider-bg: $gray-200;
+
+
+// Inputs
+$input-border:            #d4dbe0;
+$input-color-placeholder: $gray-300;
+
+
+// Z-index
+$zindex-zoom:  1080;
+$zindex-growl: 1090;
+
+
+$container-max-widths: (
+  lg: 960px + $grid-gutter-width,
+  xl: 1200px + $grid-gutter-width
+);
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+
+// Navbar
+$navbar-margin-bottom:          0;
+$navbar-nav-active-font-weight: inherit;
+
+$navbar-dark-color:  rgba($white, .5);
+$navbar-dark-bg:     $primary;
+$navbar-dark-border: #1c73a5;
+
+$navbar-dark-hover-color:  rgba($white, .8);
+$navbar-dark-active-color: $white;
+
+$navbar-dark-toggle-border-color: #1c73a5;
+$navbar-dark-toggle-hover-bg:     darken($navbar-inverse-bg, 2%);
+
+$nav-item-inline-spacer: 2rem;
+
+
+// Nav Hover
+$nav-link-hover-bg: $gray-100;
+
+
+// Nav Bordered
+$nav-bordered-color:              inherit;
+$nav-bordered-color-active:       $primary;
+$nav-bordered-font-weight:        $font-weight-light;
+$nav-bordered-font-weight-active: 500;
+
+
+// Popover
+$popover-fallback-border-color: $gray-200;
+$popover-border-color:          $gray-200;
+
+
+// Modal
+$modal-content-fallback-border-color: $gray-300;
+
+
+// Misc. Colors
+$headings-small-color: inherit;
+
+
+// Dropdowns
+$dropdown-link-color:     $navbar-light-color;
+$dropdown-border:         rgba($black, .05);
+$dropdown-padding:        ($spacer * .6) 0;
+$dropdown-item-padding-y: $spacer * .3;
+$dropdown-item-padding-x: $spacer * 1.3;
+$dropdown-link-hover-bg:  $gray-100;
+
+
+// Spacing
+$spacer:   $spacer * 1.3;
+$spacer-x: $spacer;
+$spacer-y: $spacer;
+
+
+// Zoom
+$zoom-overlay-bg: $white;
+
+
+// List Group
+$list-group-hover-bg: $gray-100;
+
+
+// Custom Forms
+$custom-select-color:       $input-color;
+$custom-select-bg:          $input-bg;
+$custom-select-disabled-bg: $input-disabled-bg;
+
+$custom-control-indicator-bg:     $input-bg;
+$custom-control-indicator-border: rgba($black, .15);
+
+$custom-control-indicator-checked-bg:      $primary;
+$custom-control-indicator-checked-border:  $primary;
+$custom-control-indicator-active-bg:       lighten($primary, 15%);
+$custom-control-indicator-active-border:   lighten($primary, 15%);
+$custom-control-indicator-disabled-bg:     darken($input-bg, 5%);
+$custom-control-indicator-disabled-border: $custom-control-indicator-border;

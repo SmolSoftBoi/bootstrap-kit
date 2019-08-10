@@ -1,0 +1,16 @@
+// Bold
+@import "bold-variables";
+@import "components";
+
+
+// Global Overrides
+html {
+  background-color: $body-bg;
+}
+
+body {
+  position: relative;
+  max-width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -1,0 +1,70 @@
+// Bold Variables
+
+
+// Theme Colors
+$theme-colors: (
+  primary: #EEE04A,
+  secondary: #d4dbe0,
+  success: #5cb85c,
+  info: #5bc0de,
+  warning: #f0ad4e,
+  danger: #d9534f,
+  light: #f5f8fa,
+  dark: #122a38
+);
+
+
+// Kit Variables
+@import "variables";
+
+
+// General
+$body-bg:                  $black;
+$navbar-transparent-color: $black;
+
+
+// Cards
+$card-bg:             #151515;
+$card-border-radius:  0;
+$card-spacer-x:       $spacer * 1.9;
+$card-danger-border:  $danger;
+
+
+// Button Colors
+$btn-secondary-color:  $white;
+$btn-secondary-bg:     #444;
+$btn-secondary-border: transparent;
+$btn-primary-color:    $black;
+$btn-primary-bg:       $primary;
+$btn-primary-border:   $primary;
+$link-color:           $primary;
+
+
+// HR
+$hr-border: $white;
+
+
+// Blocks
+$block-bg-inverted: #151515;
+
+
+// Grid Containers
+$container-max-widths: (
+  md: 700px + $grid-gutter-width,
+  lg: 900px + $grid-gutter-width,
+  xl: 1100px + $grid-gutter-width
+);
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+
+// Stage
+$stage-bg:                   $black;
+$stage-shelf-width:          $spacer * 15.6;
+$stage-toggle-offset:        $spacer * 1.3;
+$stage-toggle-zindex:        100;
+$stage-toggle-padding:       ($spacer * .3) ($spacer * .8);
+$stage-toggle-color:         $white;
+$stage-toggle-bg:            $black;
+$stage-toggle-border-radius: 0;
+$stage-toggle-hover-color:   $white;
+$stage-toggle-hover-bg:      $black;

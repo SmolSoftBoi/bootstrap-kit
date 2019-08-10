@@ -1,0 +1,52 @@
+// Minimal
+
+
+// Theme Colors
+$theme-colors: (
+  primary: #685d9f,
+  secondary: #d4dbe0,
+  success: #5cb85c,
+  info: #5bc0de,
+  warning: #f0ad4e,
+  danger: #d9534f,
+  light: #f5f8fa,
+  dark: #122a38
+);
+
+
+// Kit Variables
+@import "./variables.scss";
+
+
+// Misc. Typography
+$body-color:           $black;
+$headings-font-weight: $font-weight-lighter;
+$btn-font-weight:      $font-weight-light;
+$letter-spacing-base:  -.02rem;
+
+
+// Lead
+$lead-letter-spacing: $letter-spacing-base;
+$lead-font-size:      $font-size-base * 1.5;
+
+
+// Blocks
+$block-title-font-size:    $font-size-base * 3.5;
+$block-title-font-size-sm: $block-title-font-size * 1.6;
+$block-lead-font-size:     $font-size-base * 1.25;
+
+
+// Navbars
+$navbar-toggler-border-color: transparent;
+$navbar-toggler-hover-bg:     transparent;
+$navbar-border:               transparent;
+$navbar-brand-color:          $gray-700;
+
+$nav-bordered-color:              $black;
+$nav-bordered-color-active:       $primary;
+$nav-bordered-font-weight:        $font-weight-lighter;
+$nav-bordered-font-weight-active: $font-weight-bold;
+
+$navbar-toggler-bg: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#685D9F' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+
+$input-height-base: $spacer * 2.4;

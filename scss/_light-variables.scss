@@ -8,18 +8,12 @@ $gray-subtle: #eee;
 
 
 // Brand Scale
-$theme-colors: (
-  primary: #1997c6,
-  success: #1bc98e,
-  info: #9f86ff,
-  warning: #e4d836,
-  danger: #e64759,
-  dark: darken(#252830, 5%)
-);
-
-
-// Kit Variables
-@import "./variables.scss";
+$primary: #1997c6;
+$success: #1bc98e;
+$info:    #9f86ff;
+$warning: #e4d836;
+$danger:  #e64759;
+$dark:    darken(#252830, 5%);
 
 
 $font-family-serif:             georgia, "Times New Roman", times, serif !default;
@@ -48,7 +42,7 @@ $font-family-sans-serif:  "Roboto", "Helvetica Neue", helvetica, arial, sans-ser
 $font-family-base:        $font-family-sans-serif;
 
 // Body
-$font-size-base:      0.9rem;
+$font-size-base:      .9rem;
 $font-weight-base:    $font-weight-light;
 $letter-spacing-base: 0;
 $line-height-base:    1.5;

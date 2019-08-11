@@ -1,8 +1,7 @@
 {
-  "name": "bootstrap-kit",
+  "name": "@epickris/bootstrap-kit",
   "description": "User interface and behaviour framework based on Bootstrap.",
   "author": "Kristian Matthews",
-  "license": "MIT",
   "private": false,
   "devDependencies": {
     "bootstrap": "^4.3.1",
@@ -14,5 +13,7 @@
   },
   "scripts": {
     "scss-lint": "stylelint \"scss/**/*.scss\" --cache"
-  }
+  },
+  "version": "0.0.1",
+  "repository": "https://github.com/EpicKris/bootstrap-kit.git"
 }

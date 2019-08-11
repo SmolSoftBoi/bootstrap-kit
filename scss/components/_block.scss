@@ -11,7 +11,7 @@
   background-size: cover;
 
   .lead {
-    font-size: $block-lead-font-size;
+    font-size: $block-lead-font-size-xs;
   }
 }
 
@@ -175,7 +175,7 @@
     top: 0;
     right: 0;
     left: 0;
-    z-index: $zindex-block-border10;
+    z-index: $zindex-block-border;
     width: 33%;
     margin: 0 auto;
     border-top: $block-border-width solid;
@@ -230,7 +230,7 @@
 
     &:not(.block-secondary) {
       .lead {
-        font-size: $block-lead-font-size-sm;
+        font-size: $block-lead-font-size;
       }
     }
   }

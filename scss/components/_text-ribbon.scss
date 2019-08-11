@@ -3,8 +3,8 @@
 .text-ribbon {
   position: relative;
   left: $text-ribbon-min-width;
-  padding-top: $text-ribbon-min-padding-y;
-  padding-bottom: $text-ribbon-min-padding-y;
+  padding-top: $text-ribbon-padding-y;
+  padding-bottom: $text-ribbon-padding-y;
   background-color: $text-ribbon-bg;
   overflow: hidden;
 
@@ -28,7 +28,7 @@
 .text-ribbon-input {
   display: block;
   width: 100%;
-  margin: 0 0 $text-ribbon-min-padding-y;
+  margin: 0 0 $text-ribbon-padding-y;
   padding: $text-ribbon-input-padding;
   font-weight: 400;
   color: inherit;

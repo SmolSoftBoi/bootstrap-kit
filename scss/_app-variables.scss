@@ -1,5 +1,6 @@
 // App
 
+
 // Gray Scale
 $gray-100: #f5f8fa;
 $gray-200: #d4dbe0;
@@ -10,29 +11,23 @@ $gray-800: #122a38;
 
 
 // Brand Scale
-$theme-colors: (
-  primary: #3097d1,
-  secondary: $gray-200,
-  success: #5cb85c,
-  info: #5bc0de,
-  warning: #f0ad4e,
-  danger: #d9534f,
-  light: $gray-100,
-  dark: $gray-800
-);
+$primary:   #3097d1;
+$secondary: $gray-200;
+$success:   #5cb85c;
+$info:      #5bc0de;
+$warning:   #f0ad4e;
+$danger:    #d9534f;
+$light:     $gray-100;
+$dark:      $gray-800;
 
 
-// Kit Variables
-@import "variables";
+// Body
+$body-bg: #f5f8fa;
 
 
 $font-family-serif: georgia, "Times New Roman", times, serif !default;
 $font-size-xs: .75rem !default;
 $nav-tabs-active-link-hover-bg: $body-bg !default;
-
-
-// Body
-$body-bg: #f5f8fa;
 
 
 // Component Borders
@@ -117,7 +112,7 @@ $navbar-dark-hover-color:  rgba($white, .8);
 $navbar-dark-active-color: $white;
 
 $navbar-dark-toggle-border-color: #1c73a5;
-$navbar-dark-toggle-hover-bg:     darken($navbar-inverse-bg, 2%);
+$navbar-dark-toggle-hover-bg:     darken($navbar-dark-bg, 2%);
 
 $nav-item-inline-spacer: 2rem;
 

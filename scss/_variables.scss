@@ -1,4 +1,5 @@
-// Variables
+// Bootstrap Functions & Variables
+@import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 
 
@@ -7,18 +8,22 @@ $gray-subtle: $gray-200 !default;
 
 
 // Container
-$container-spacious-padding-x: $container-padding-x * 2.7 !default;
+$container-spacious-padding-x: ($grid-gutter-width / 2) * 2.7 !default;
 
 
 // Paragraphs
-$paragraph-margin-top: null !default;
+$paragraph-margin-top: 0 !default;
 
 
 // Typography
+$text-color: $black !default;
+
+$font-size-xs: $font-size-sm * .9 !default;
+
 $font-weight-base:    300 !default;
 $letter-spacing-base: 0 !default;
 
-$headings-margin-top: null !default;
+$headings-margin-top: 0 !default;
 
 
 $lead-font-size-xs:   $lead-font-size * .9 !default;
@@ -140,6 +145,7 @@ $nav-icon-nav-link-font-size:    $font-size-base * 1.1 !default;
 
 // Navbar
 $navbar-nav-active-font-weight: inherit !default;
+$navbar-border:                 transparent !default;
 
 $navbar-dark-bg:       $primary !default;
 $navbar-dark-brand-bg: $navbar-dark-bg !default;
@@ -167,6 +173,8 @@ $modal-action-bg: $gray-100 !default;
 
 
 // Nav
+$nav-tabs-active-link-hover-bg: $body-bg !default;
+
 $nav-toggler-width:         $spacer * 2.5 !default;
 $nav-toggler-padding:       $spacer * .6 !default;
 $nav-toggler-font-size:     $font-size-base !default;
@@ -228,8 +236,8 @@ $list-group-progress-bg: darken($body-bg, 3%);
 // Carousel Light
 $carousel-light-control-color:         rgba($black, .3);
 
-$carousel-light-indicator-color:        $carousel-light-color !default;
-$carousel-light-indicator-active-bg:    $white !default;
+$carousel-light-indicator-color:        rgba($black, .3) !default;
+$carousel-light-indicator-color-active: $white !default;
 $carousel-light-indicator-border-color: $primary !default;
 
 
@@ -285,7 +293,7 @@ $block-transform:    rotate(-2deg) !default;
 $block-border-width: $border-width !default;
 $block-border-color: rgba($black, .1) !default;
 
-$block-light-color:        $block-color !default;
+$block-light-color:        $body-color !default;
 $block-light-bg:           $white !default;
 $block-light-border-color: $block-border-color !default;
 
@@ -401,7 +409,7 @@ $pull-quote-cite-text-transform: uppercase !default;
 $hr-divider-font-size:      $font-size-sm * .9 !default;
 $hr-divider-line-height:    $hr-divider-font-size * 1.7 !default;
 $hr-divider-text-transform: uppercase !default;
-$hr-divider-height:         $hr-height !default;
+$hr-divider-height:         $border-width !default;
 
 $hr-content-padding-x:     $spacer !default;
 $hr-divider-content-color: $gray-700 !default;
@@ -458,7 +466,7 @@ $datepicker-inline-border-color-before: rgba($black, .2) !default;
 $datepicker-inline-border-width-after:  $border-width * 6 !default;
 $datepicker-inline-border-color-after:  $white !default;
 
-$datapicker-table-margin-x:         $spacer * .6 !default;
+$datepicker-table-margin-x:         $spacer * .6 !default;
 $datepicker-table-margin-y:         $spacer * .3 !default;
 $datepicker-table-td-size:          $spacer * 1.9 !default;
 $datepicker-table-td-border-radius: $datepicker-border-radius !default;

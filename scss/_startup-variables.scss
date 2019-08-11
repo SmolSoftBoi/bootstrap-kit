@@ -2,26 +2,20 @@
 
 
 // Theme Colors
-$theme-colors: (
-  primary: #2595ff,
-  secondary: #fff,
-  success: #5cb85c,
-  info: #5bc0de,
-  warning: #f0ad4e,
-  danger: #d9534f,
-  light: #f5f8fa,
-  dark: #122a38
-);
-
-
-// Kit Variables
-@import "./variables.scss";
+$primary:   #2595ff;
+$secondary: $white;
+$success:   #5cb85c;
+$info:      #5bc0de;
+$warning:   #f0ad4e;
+$danger:    #d9534f;
+$light:     #f5f8fa;
+$dark:      #122a38;
 
 
 // Text Overrides
 $body-color:             #6c6f73;
 $font-size-base:         $spacer * .9;
-$font-family-sans-serif: "Work sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: "Work sans", "Helvetica Neue", helvetica, arial, sans-serif;
 $font-family-base:       $font-family-sans-serif;
 $headings-font-family:   $font-family-sans-serif;
 $text-color:             #6c6f73;

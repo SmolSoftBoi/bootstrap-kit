@@ -2,20 +2,14 @@
 
 
 // Theme Colors
-$theme-colors: (
-  primary: #685d9f,
-  secondary: #d4dbe0,
-  success: #5cb85c,
-  info: #5bc0de,
-  warning: #f0ad4e,
-  danger: #d9534f,
-  light: #f5f8fa,
-  dark: #122a38
-);
-
-
-// Kit Variables
-@import "./variables.scss";
+$primary:   #685d9f;
+$secondary: #d4dbe0;
+$success:   #5cb85c;
+$info:      #5bc0de;
+$warning:   #f0ad4e;
+$danger:    #d9534f;
+$light:     #f5f8fa;
+$dark:      #122a38;
 
 
 // Misc. Typography

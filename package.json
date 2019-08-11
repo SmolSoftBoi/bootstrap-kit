@@ -4,16 +4,36 @@
   "author": "Kristian Matthews",
   "private": false,
   "devDependencies": {
+    "autoprefixer": "^9.6.1",
     "bootstrap": "^4.3.1",
-    "stylelint": "^10.1.0",
+    "clean-css-cli": "^4.3",
+    "node-sass": "^4.12",
+    "node-sass-tilde-importer": "^1.0.2",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^6.1.3",
+    "stylelint": "^10.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^18.3",
     "stylelint-config-twbs-bootstrap": "^0.3.1",
-    "stylelint-order": "^3.0.1"
+    "stylelint-order": "^3.0.1",
+    "yarn-run-all": "^3.1.1"
   },
   "scripts": {
+    "build": "run-p css-build",
+    "css-build": "run-s scss-build css-prefix css-minify",
+    "css-minify": "run-p css-minify-*",
+    "css-minify-kit": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/kit.min.css dist/css/kit.css",
+    "css-minify-app": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/app.min.css dist/css/app.css",
+    "css-minify-bold": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/bold.min.css dist/css/bold.css",
+    "css-minify-dark": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/dark.min.css dist/css/dark.css",
+    "css-minify-light": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/light.min.css dist/css/light.css",
+    "css-minify-minimal": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/minimal.min.css dist/css/minimal.css",
+    "css-minify-startup": "cleancss --format breakWith=unix --source-map --source-map-inline-sources --output dist/css/startup.min.css dist/css/startup.css",
+    "css-prefix": "postcss --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
+    "scss-build": "node-sass --output-style expanded --source-map true --source-map-contents true --importer=node_modules/node-sass-tilde-importer scss/ -o dist/css/",
     "scss-lint": "stylelint \"scss/**/*.scss\" --cache"
   },
   "version": "0.0.1",
-  "repository": "https://github.com/EpicKris/bootstrap-kit.git"
+  "repository": "https://github.com/EpicKris/bootstrap-kit.git",
+  "sass": "scss/kit.scss"
 }

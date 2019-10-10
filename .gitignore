@@ -1,6 +1,18 @@
 
-# Created by https://www.gitignore.io/api/node,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=node,visualstudiocode
+dist
+
+# Created by https://www.gitignore.io/api/hugo,node,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=hugo,node,visualstudiocode
+
+### Hugo ###
+# Generated files by hugo
+/public/
+/resources/_gen/
+
+# Executable may be added to repository
+hugo.exe
+hugo.darwin
+hugo.linux
 
 ### Node ###
 # Logs
@@ -103,4 +115,4 @@ typings/
 # Ignore all local history of files
 .history
 
-# End of https://www.gitignore.io/api/node,visualstudiocode
+# End of https://www.gitignore.io/api/hugo,node,visualstudiocode

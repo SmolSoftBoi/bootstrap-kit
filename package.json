@@ -33,7 +33,7 @@
     "scss-build": "node-sass --output-style expanded --source-map true --source-map-contents true --importer=node_modules/node-sass-tilde-importer scss/ -o dist/css/",
     "scss-lint": "stylelint \"scss/**/*.scss\" --cache"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": "https://github.com/EpicKris/bootstrap-kit.git",
   "sass": "scss/kit.scss"
 }

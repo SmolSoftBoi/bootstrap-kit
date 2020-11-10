@@ -96,6 +96,8 @@
   }
 }
 
+
+// Pills
 .nav-pills {
   > li {
     &.active {
@@ -107,5 +109,22 @@
         }
       }
     }
+  }
+}
+
+
+// Justified Variants
+.nav-fill {
+  .navbar-brand {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+.nav-justified {
+  .navbar-brand {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
   }
 }

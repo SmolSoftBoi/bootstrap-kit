@@ -34,6 +34,41 @@
   }
 }
 
+.navbar-toggler {
+  &.disabled {
+    cursor: default;
+  }
+}
+
+.navbar-toggler-esq {
+  @extend .navbar-toggler;
+}
+
+.navbar-toggler-esq-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+
+.navbar-expand {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+        .nav-item-expand {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
 .navbar-brand {
   > img {
     vertical-align: text-top;

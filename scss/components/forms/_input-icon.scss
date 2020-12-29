@@ -12,7 +12,13 @@
   > .icon {
     position: absolute;
     top: $input-icon-top;
+    bottom: $input-icon-top;
     left: $input-icon-left;
     color: $input-icon-color;
+
+    > svg {
+      max-width: $input-icon-control-padding-left - ($input-icon-left * 2);
+      height: 100%;
+    }
   }
 }

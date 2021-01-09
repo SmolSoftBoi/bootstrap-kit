@@ -1,0 +1,13 @@
+// Utilities
+
+.bg-blur-saturate {
+  backdrop-filter: blur($blur) saturate($saturate);
+}
+
+.bg-blur {
+  backdrop-filter: blur($blur);
+}
+
+.bg-saturate {
+  backdrop-filter: saturate($saturate);
+}

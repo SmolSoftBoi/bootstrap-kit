@@ -86,7 +86,9 @@
     }
 
     .nav-divider {
-      @include nav-divider($nav-bordered-divider-color);
+      height: 0;
+      overflow: hidden;
+      border-top: 1px solid $nav-bordered-divider-color;
       margin-top: $nav-bordered-divider-margin-top;
       margin-bottom: $nav-bordered-divider-margin-bottom;
       margin-left: $spacer * 1.7;

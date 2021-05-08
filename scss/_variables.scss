@@ -1,6 +1,10 @@
+//
 // Bootstrap Functions & Variables
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
+//
+
+@import "bootstrap/scss/functions"; // Required
+@import "bootstrap/scss/variables"; // Required
+@import "bootstrap/scss/mixins"; // Required
 
 
 // Color System
@@ -71,7 +75,8 @@ $btn-letter-spacing: normal !default;
 $btn-more-top:          1px !default;
 $btn-more-padding-left: $spacer * .3 !default;
 
-$btn-pill-padding-x: 1.25rem !default;
+$btn-pill-padding-x:     1.25rem !default;
+$btn-pill-border-radius: 1000rem !default;
 
 
 // Button Group
@@ -98,15 +103,17 @@ $input-icon-control-padding-left: $spacer * 1.9 !default;
 
 
 // Z-index Master List
-$zindex-list-group-progress: -1 !default;
-$zindex-statlist-progress:   -1 !default;
-$zindex-block-foreground:    2 !default;
-$zindex-hr-divider-content:  2 !default;
-$zindex-nav-icon-label:      5 !default;
-$zindex-block-border:        10 !default;
-$zindex-stage-toggle:        100 !default;
-$zindex-zoom:                1080 !default;
-$zindex-growl:               1090 !default;
+$zindex-list-group-progress:    -1 !default;
+$zindex-statlist-progress:      -1 !default;
+$zindex-block-background-fixed: 0 !default;
+$zindex-block-background:       1 !default;
+$zindex-block-foreground:       2 !default;
+$zindex-hr-divider-content:     2 !default;
+$zindex-nav-icon-label:         5 !default;
+$zindex-block-border:           10 !default;
+$zindex-stage-toggle:           100 !default;
+$zindex-zoom:                   1080 !default;
+$zindex-growl:                  1090 !default;
 
 
 // Nav
@@ -525,7 +532,7 @@ $growl-alert-dismissable-top:   -($spacer * .3) !default;
 $profile-header-height:         $spacer * 31.3 !default;
 $profile-header-height-sm:      $profile-header-height * .8 !default;
 $profile-header-height-xs:      $profile-header-height-sm * .7 !default;
-$profile-header-padding-bottom: $jumbotron-padding * 1.6 !default;
+$profile-header-padding-bottom: 3.2rem !default;
 
 $profile-header-container-inner-width: $spacer * 18.8 !default;
 

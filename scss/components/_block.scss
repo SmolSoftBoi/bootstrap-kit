@@ -3,7 +3,7 @@
 .block {
   position: relative;
   width: 100%;
-  padding: $block-padding-y $block-padding-x;
+  padding: $block-padding-y ($block-padding-x * .1);
   color: $block-color;
   background-color: $block-bg;
   background-repeat: no-repeat;
@@ -192,6 +192,20 @@
 
 .block-paralax {
   background-attachment: fixed;
+
+  .block-background {
+    z-index: $zindex-block-background-fixed;
+
+    & > iframe,
+    & > picture,
+    & > video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+  }
 }
 
 .block-transparent {
@@ -204,11 +218,27 @@
   right: 0;
   bottom: 0;
   left: 0;
+  overflow: hidden;
+  clip: rect(0, auto, auto, 0);
+  z-index: $zindex-block-background;
 
-  & > iframe {
-    display: block;
+  & > iframe,
+  & > picture,
+  & > video {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+
+    > img {
+      flex-shrink: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
   }
 }
 
@@ -221,12 +251,12 @@
 .block-fill-height {
   display: table;
   width: 100%;
-  height: 110vh;
+  height: 100vh;
 }
 
 @include media-breakpoint-up(sm) {
   .block {
-    padding: $block-padding-y ($block-padding-x * .1);
+    padding: $block-padding-y $block-padding-x;
 
     &:not(.block-secondary) {
       .lead {

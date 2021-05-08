@@ -1,4 +1,17 @@
+//
 // Kit
+//
+
+//
+// Override Bootstrap here
+//
+
 @import "variables";
 @import "kit-variables";
 @import "components";
+
+//
+// Bring in Bootstrap
+//
+
+@import "bootstrap/scss/bootstrap";

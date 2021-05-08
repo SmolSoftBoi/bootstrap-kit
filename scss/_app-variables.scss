@@ -1,4 +1,6 @@
+//
 // App
+//
 
 
 // Gray Scale
@@ -94,8 +96,8 @@ $zindex-growl: 1090;
 
 
 $container-max-widths: (
-  lg: 960px + $grid-gutter-width,
-  xl: 1200px + $grid-gutter-width
+  // lg: 960px + $grid-gutter-width,
+  // xl: 1200px + $grid-gutter-width
 );
 @include _assert-ascending($container-max-widths, "$container-max-widths");
 

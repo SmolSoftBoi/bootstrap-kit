@@ -1,5 +1,9 @@
 // Statcard
 
+.statcard {
+  border-radius: $statcard-border-radius;
+}
+
 .statcard-number {
   margin-top: 0;
   margin-bottom: 0;
@@ -59,7 +63,6 @@
 .statcard-warning,
 .statcard-danger {
   color: $white;
-  border-radius: $statcard-border-radius;
 
   .statcard-number,
   .delta-positive,

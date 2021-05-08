@@ -1,4 +1,6 @@
+//
 // Bold Variables
+//
 
 
 // Theme Colors
@@ -44,9 +46,9 @@ $block-bg-inverted: #151515;
 
 // Grid Containers
 $container-max-widths: (
-  md: 700px + $grid-gutter-width,
-  lg: 900px + $grid-gutter-width,
-  xl: 1100px + $grid-gutter-width
+  // md: 700px + $grid-gutter-width,
+  // lg: 900px + $grid-gutter-width,
+  // xl: 1100px + $grid-gutter-width
 );
 @include _assert-ascending($container-max-widths, "$container-max-widths");
 

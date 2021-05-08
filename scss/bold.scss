@@ -1,8 +1,14 @@
+//
 // Bold
+//
+
+//
+// Override Bootstrap here
+//
+
 @import "variables";
 @import "bold-variables";
 @import "components";
-
 
 // Global Overrides
 html {
@@ -15,3 +21,9 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
+
+//
+// Bring in Bootstrap
+//
+
+@import "bootstrap/scss/bootstrap";

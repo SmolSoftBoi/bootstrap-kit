@@ -1,4 +1,17 @@
+//
 // Minimal
+//
+
+//
+// Override Bootstrap here
+//
+
 @import "variables";
 @import "minimal-variables";
 @import "components";
+
+//
+// Bring in Bootstrap
+//
+
+@import "bootstrap/scss/bootstrap";

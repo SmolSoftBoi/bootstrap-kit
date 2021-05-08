@@ -13,6 +13,10 @@
   padding-top: $nav-link-height;
 }
 
+.cover-top-navbar {
+  margin-top: -($nav-link-height + ($navbar-padding-y * 2));
+}
+
 .navbar-nav {
   > li {
     > a {
@@ -61,6 +65,33 @@
 
     &#{$infix} {
       @include media-breakpoint-down($breakpoint) {
+        &.navbar-toggle-fill-height {
+          @include transition($transition-collapse);
+          align-items: flex-start;
+
+          &.opening,
+          &.open {
+            height: 100vh;
+          }
+        }
+
+        &.navbar-toggle-fixed-top {
+          &.opening,
+          &.open {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: $zindex-fixed;
+          }
+        }
+
+        &.navbar-toggle-sticky-top {
+          position: sticky;
+          top: 0;
+          z-index: $zindex-sticky;
+        }
+
         .nav-item-expand {
           display: none;
         }
@@ -81,7 +112,7 @@
 
 .navbar-brand-icon {
   float: left;
-  margin-right: $navbar-padding-x * .3;
+  margin-right: 0;
   text-align: center;
 }
 
@@ -114,15 +145,15 @@
     &:focus {
       color: $navbar-dark-bg;
       background-color: $navbar-dark-active-color;
-      box-shadow: 0 0 ($navbar-padding-x * .4) $navbar-dark-color;
+      box-shadow: 0 0 0 $navbar-dark-color;
     }
   }
 }
 
 .navbar-padded {
   .navbar-header {
-    padding-right: $navbar-padding-x * .3;
-    padding-left: $navbar-padding-x * .3;
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 

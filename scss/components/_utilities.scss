@@ -11,3 +11,7 @@
 .bg-saturate {
   backdrop-filter: saturate($saturate);
 }
+
+.no-scroll {
+  overflow: hidden;
+}

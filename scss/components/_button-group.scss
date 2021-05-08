@@ -2,7 +2,7 @@
 
 .btn-group-justified {
   &.btn-group-justified-spaced {
-    width: calc(100% + $btn-group-justified-width);
+    // width: calc(100% + $btn-group-justified-width);
     margin-left: -($btn-group-justified-width / 2);
     border-spacing: $btn-group-justified-width / 2;
   }

@@ -1,12 +1,18 @@
+//
 // Components
-@import "~bootstrap/scss/bootstrap";
+//
 
-
+//
 // Configuration
+//
+
 @import "components/utilities";
 
 
+//
 // Layout & Components
+//
+
 @import "components/reboot";
 @import "components/container";
 @import "components/tables";

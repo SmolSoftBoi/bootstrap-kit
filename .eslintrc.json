@@ -4,11 +4,13 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:unicorn/recommended",
-    "xo/esnext",
+    "xo",
     "xo/browser"
   ],
   "rules": {
     "unicorn/no-array-callback-reference": "off",
+    "unicorn/no-null": "off",
+    "unicorn/prefer-module": "off",
     "unicorn/prevent-abbreviations": "off",
     "indent": [
       "error",

@@ -1,9 +1,11 @@
 // Zoom
 
+/* stylelint-disable-next-line selector-no-qualifying-type */
 img[data-action="zoom"] {
   cursor: pointer;
   cursor: zoom-in;
 
+  /* stylelint-disable-next-line selector-no-qualifying-type */
   &.zoom-img {
     cursor: pointer;
     cursor: zoom-out;
@@ -24,8 +26,8 @@ img[data-action="zoom"] {
   bottom: 0;
   left: 0;
   z-index: $zindex-zoom - 1;
-  background: $zoom-overlay-bg;
   pointer-events: none;
+  background: $zoom-overlay-bg;
   opacity: 0;
   transition: $zoom-overlay-transition;
 }

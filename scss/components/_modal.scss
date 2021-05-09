@@ -13,7 +13,7 @@
 
 // Modal Actions
 .modal-actions {
-  @include clearfix;
+  @include clearfix ();
 }
 
 .modal-action {

@@ -12,7 +12,7 @@
 .sidebar-header {
   position: relative;
   padding-bottom: $sidebar-header-padding-bottom;
-  @include clearfix;
+  @include clearfix ();
 }
 
 .sidebar-toggler {
@@ -67,8 +67,8 @@
     top: 0;
     right: 0;
     padding: $sidebar-form-btn-link-padding-y $sidebar-form-btn-link-padding-x;
-    color: $sidebar-form-btn-link-color;
     line-height: 0;
+    color: $sidebar-form-btn-link-color;
     border: 0;
 
     .glyphicon {

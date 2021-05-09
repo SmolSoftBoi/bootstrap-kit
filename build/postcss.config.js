@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = ctx => {
   return {
     map: ctx.file.dirname.includes('examples') ?
@@ -12,7 +10,8 @@ module.exports = ctx => {
     plugins: {
       autoprefixer: {
         cascade: false
-      }
+      },
+      rtlcss: ctx.env === 'RTL' ? {} : false
     }
-  }
-}
+  };
+};

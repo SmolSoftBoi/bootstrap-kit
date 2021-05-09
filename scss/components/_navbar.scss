@@ -193,7 +193,7 @@
 
 // Header Port
 .navbar-header {
-  @include clearfix;
+  @include clearfix ();
   @include media-breakpoint-up(md) {
     float: left;
   }

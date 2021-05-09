@@ -1,4 +1,5 @@
 // Datepicker
+/* stylelint-disable */
 
 .datepicker {
   padding: $datepicker-padding;
@@ -27,21 +28,21 @@
     &::before {
       position: absolute;
       display: inline-block;
+      content: "";
       border-top: 0;
       border-right: $datepicker-inline-border-width-before solid transparent;
       border-bottom: $datepicker-inline-border-width-before solid $datepicker-inline-border-color-before;
       border-left: $datepicker-inline-border-width-before solid transparent;
-      content: "";
     }
 
     &::after {
       position: absolute;
       display: inline-block;
+      content: "";
       border-top: 0;
       border-right: $datepicker-inline-border-width-after solid transparent;
       border-bottom: $datepicker-inline-border-width-after solid $datepicker-inline-border-color-after;
       border-left: $datepicker-inline-border-width-after solid transparent;
-      content: "";
     }
 
     &.datepicker-orient-top {
@@ -102,7 +103,7 @@
   table {
     margin: $datepicker-table-margin-y $datepicker-table-margin-x;
     user-select: none;
-    touch-callout: none;
+    -webkit-touch-callout: none;
 
     > tbody,
     > thead {
@@ -123,8 +124,8 @@
       &.day {
         &:hover,
         &.focused {
-          background: $datepicker-day-bg;
           cursor: pointer;
+          background: $datepicker-day-bg;
         }
       }
 
@@ -137,16 +138,15 @@
         &,
         &:hover {
           color: $datepicker-disabled;
-          background: none;
           cursor: default;
+          background: none;
         }
       }
 
       &.today {
         &,
         &:hover,
-        &.disabled
-        &.disabled:hover {
+        &.disabled &.disabled:hover {
           @include button-variant($datepicker-today-color, lighten($orange, 30%), darken(lighten($orange, 30%), 20%));
         }
 
@@ -205,8 +205,8 @@
         height: $datepicker-span-height;
         margin: 1%;
         line-height: $datepicker-span-height;
-        border-radius: $datepicker-span-border-radius;
         cursor: pointer;
+        border-radius: $datepicker-span-border-radius;
 
         &:hover {
           background: $datepicker-span-hover-bg;
@@ -216,8 +216,8 @@
           &,
           &:hover {
             color: $datepicker-disabled;
-            background: none;
             cursor: default;
+            background: none;
           }
         }
 
@@ -270,8 +270,8 @@
   }
 
   thead tr:first-child .cw {
-    background-color: transparent;
     cursor: default;
+    background-color: transparent;
   }
 }
 

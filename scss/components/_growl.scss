@@ -15,15 +15,15 @@
   }
 
   .alert {
-    animation: slide-from-top 1000ms cubic-bezier(.2, .7, .5, 1);
     margin-bottom: $growl-alert-margin-bottom;
+    animation: slide-from-top 1000ms cubic-bezier(.2, .7, .5, 1);
   }
 
   .alert-dismissable,
   .alert-dismissible {
     .close {
-      color: $growl-alert-dismissable-color;
       top: $growl-alert-dismissable-top;
+      color: $growl-alert-dismissable-color;
     }
   }
 }
@@ -37,8 +37,8 @@
 
 @keyframes slide-from-top {
   0% {
-    transform: translateY(-30%);
     opacity: 0;
+    transform: translateY(-30%);
   }
   70% {
     opacity: 1;
@@ -50,8 +50,8 @@
 
 @keyframes slide-from-right {
   0% {
-    transform: translateX(30%);
     opacity: 0;
+    transform: translateX(30%);
   }
   40% {
     opacity: 1;

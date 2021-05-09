@@ -5,8 +5,8 @@
   left: $text-ribbon-min-width;
   padding-top: $text-ribbon-padding-y;
   padding-bottom: $text-ribbon-padding-y;
-  background-color: $text-ribbon-bg;
   overflow: hidden;
+  background-color: $text-ribbon-bg;
 
   &::before {
     position: absolute;
@@ -15,8 +15,8 @@
     bottom: 0;
     width: $text-ribbon-min-width;
     height: 100%;
-    background-color: inherit;
     content: "";
+    background-color: inherit;
   }
 
   span {
@@ -28,8 +28,8 @@
 .text-ribbon-input {
   display: block;
   width: 100%;
-  margin: 0 0 $text-ribbon-padding-y;
   padding: $text-ribbon-input-padding;
+  margin: 0 0 $text-ribbon-padding-y;
   font-weight: 400;
   color: inherit;
   background-color: $text-ribbon-bg;

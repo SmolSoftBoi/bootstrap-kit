@@ -1,331 +1,336 @@
+import EventHandler from 'bootstrap/js/src/dom/event-handler';
+import BaseComponent from 'bootstrap/js/src/base-component';
+import { defineJQueryPlugin } from 'bootstrap/js/src/util';
+
 /**
- * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0): zoom.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * --------------------------------------------------------------------------
+ * ------------------------------------------------------------------------
+ * Constants
+ * ------------------------------------------------------------------------
  */
 
-const Zoom = (($) => {
+const NAME = 'zoom';
+const DATA_KEY = 'bs.zoom';
+const EVENT_KEY = `.${DATA_KEY}`;
+const DATA_API_KEY = '.data-api';
 
-  /**
-   * ------------------------------------------------------------------------
-   * Constants
-   * ------------------------------------------------------------------------
-   */
+const TRANSITION_END = 'transitionend';
+const ZOOM_OFFSET = 80;
 
-  const NAME                = 'zoom'
-  const DATA_KEY            = 'bs.zoom'
-  const VERSION             = 'v4.0.0'
-  const DATA_API            = '[data-action="zoom"]'
-  const EVENT_KEY           = `.${DATA_KEY}`
-  const DATA_API_KEY        = '.data-api'
-  const JQUERY_NO_CONFLICT  = $.fn[NAME]
-  const TRANSITION_DURATION = 150
-  const ZOOM_OFFSET = 80
+const EVENT_CLICK = `click${EVENT_KEY}`;
+const EVENT_SCROLL = `scroll${EVENT_KEY}`;
+const EVENT_KEYUP = `keyup${EVENT_KEY}`;
+const EVENT_TOUCHSTART = `touchstart${EVENT_KEY}`;
+const EVENT_TOUCHMOVE = `touchmove${EVENT_KEY}`;
+const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`;
 
-  const Event = {
-    CLICK: `click${EVENT_KEY}`,
-    SCROLL: `scroll${EVENT_KEY}`,
-    KEYUP: `keyup${EVENT_KEY}`,
-    TOUCHSTART: `touchstart${EVENT_KEY}`,
-    TOUCHMOVE: `touchmove${EVENT_KEY}`,
+const CLASS_NAME_ZOOM_OVERLAY_OPEN = 'zoom-overlay-open';
+const CLASS_NAME_ZOOM_OVERLAY_TRANSITIONING = 'zoom-overlay-transitioning';
+const CLASS_NAME_ZOOM_OVERLAY = 'zoom-overlay';
+const CLASS_NAME_ZOOM_IMG_WRAP = 'zoom-img-wrap';
+const CLASS_NAME_ZOOM_IMG = 'zoom-img';
+
+const SELECTOR_ACTION = '[data-action="zoom"]';
+
+const DATA_ZOOM = 'zoom';
+const DATA_ZOOM_OUT = 'zoom-out';
+
+/**
+ * ------------------------------------------------------------------------
+ * Class Definition
+ * ------------------------------------------------------------------------
+ */
+
+class ZoomService extends BaseComponent {
+  constructor(element) {
+    super(element);
+
+    this._activeZoom = null;
+    this._initialScrollPosition = null;
+    this._initialTouchPosition = null;
+    this._touchMoveListener = null;
+
+    this._document = document;
+    this._window = window;
+    this._body = document.body;
+
+    this._boundClick = this._clickHandler.bind(this);
   }
 
-  const ClassName = {
-    ZOOM_OVERLAY_OPEN          : 'zoom-overlay-open',
-    ZOOM_OVERLAY_TRANSITIONING : 'zoom-overlay-transitioning',
-    ZOOM_OVERLAY               : 'zoom-overlay',
-    ZOOM_IMG_WRAP              : 'zoom-img-wrap',
-    ZOOM_IMG                   : 'zoom-img'
+  // Getters
+
+  static get DATA_KEY() {
+    return DATA_KEY;
   }
 
-  const Data = {
-    ZOOM     : 'zoom',
-    ZOOM_OUT : 'zoom-out'
+  // Private
+
+  _zoom(event) {
+    const { target, ctrlKey, metaKey, bubbles } = event;
+
+    if (!target || target.tagName !== 'IMG') {
+      return;
+    }
+
+    if (this._body.classList.contains(CLASS_NAME_ZOOM_OVERLAY_OPEN)) {
+      return;
+    }
+
+    if (metaKey || ctrlKey) {
+      return window.open((target.getAttribute('data-original') || target.src), '_blank');
+    }
+
+    if (target.width >= (window.scrollWidth() - ZOOM_OFFSET)) {
+      return;
+    }
+
+    this._activeZoomClose(true);
+
+    this._activeZoom = new Zoom(target);
+    this._activeZoom.zoomImage();
+
+    // Todo: Probably worth throttling this
+    EventHandler.on(this._window, EVENT_SCROLL, this._scrollHandler.bind(this));
+
+    EventHandler.on(this._document, EVENT_KEYUP, this._keyHandler.bind(this));
+    EventHandler.on(this._document, EVENT_TOUCHSTART, this._touchStart.bind(this));
+
+    // We use a capturing phase here to prevent unintended js events
+    if (document.addEventListener) {
+      document.addEventListener('click', this._boundClick, true);
+    } else {
+      document.attachEvent('onclick', this._boundClick, true);
+    }
+
+    if ('bubbles' in event) {
+      if (bubbles) {
+        event.stopPropagation();
+      }
+    } else {
+      // Internet Explorer before version 9
+      event.cancelBubble = true;
+    }
   }
 
-  /**
-   * ------------------------------------------------------------------------
-   * Class Definition
-   * ------------------------------------------------------------------------
-   */
+  _activeZoomClose(forceDispose) {
+    if (!this._activeZoom) {
+      return;
+    }
+
+    if (forceDispose) {
+      this._activeZoom.dispose();
+    } else {
+      this._activeZoom.close();
+    }
+
+    EventHandler.off(this._window, EVENT_KEY);
+    EventHandler.off(this._window, EVENT_KEY);
+
+    document.removeEventListener('click', this._boundClick, true);
+
+    this._activeZoom = null;
+  }
+
+  _scrollHandler() {
+    if (this._initialScrollPosition === null) {
+      this._initialScrollPosition = window.scrollTop;
+    }
+
+    const deltaY = this._initialScrollPosition - window.scrollTop;
+    if (Math.abs(deltaY) >= 40) {
+      this._activeZoomClose();
+    }
+  }
+
+  _keyHandler(event) {
+    if (event.keyCode === 27) {
+      this._activeZoomClose();
+    }
+  }
+
+  _clickHandler(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    } else {
+      event.returnValue = false;
+    }
+
+    if ('bubbles' in event) {
+      if (event.bubbles) {
+        event.stopPropagation();
+      }
+    } else {
+      // Internet Explorer before version 9
+      event.cancelBubble = true;
+    }
+
+    this._activeZoomClose();
+  }
+
+  _touchStart(event) {
+    this._initialTouchPosition = event.touches[0].pageY;
+    EventHandler.on(event.target, EVENT_TOUCHMOVE, this._touchMove.bind(this));
+  }
+
+  _touchMove(event) {
+    if (Math.abs(event.touches[0].pageY - this._initialTouchPosition) > 10) {
+      this._activeZoomClose();
+      EventHandler.off(event.target, EVENT_TOUCHMOVE);
+    }
+  }
+
+  listen() {
+    EventHandler.on(this._body, EVENT_CLICK, SELECTOR_ACTION, this._zoom.bind(this));
+  }
+}
+
+class Zoom {
+  constructor(element) {
+    this._fullHeight = null;
+    this._fullWidth = null;
+    this._overlay = null;
+    this._targetImageWrap = null;
+
+    this._targetImage = element;
+
+    this._body = document.body;
+  }
+
+  // Public
+
+  zoomImage() {
+    const img = document.createElement('img');
+
+    img.addEventListener('load', () => {
+      this._fullHeight = Number(img.height);
+      this._fullWidth = Number(img.width);
+      this._zoomOriginal();
+    });
+
+    img.src = this._targetImage.src;
+  }
+
+  _zoomOriginal() {
+    this._targetImageWrap = document.createElement('div');
+    this._targetImageWrap.className = CLASS_NAME_ZOOM_IMG_WRAP;
 
-   class ZoomService {
+    this._targetImage.parentNode.insertBefore(this._targetImageWrap, this._targetImage);
+    this._targetImageWrap.append(this._targetImage);
 
-     constructor(element, config) {
-       this._activeZoom            = null
-       this._initialScrollPosition = null
-       this._initialTouchPosition  = null
-       this._touchMoveListener     = null
+    this._targetImage.classList.add(CLASS_NAME_ZOOM_IMG);
+    this._targetImage.dataset.Action = DATA_ZOOM_OUT;
 
-       this._$document = $(document)
-       this._$window   = $(window)
-       this._$body     = $(document.body)
+    this._overlay = document.createElement('div');
+    this._overlay.className = CLASS_NAME_ZOOM_OVERLAY;
 
-       this._boundClick = $.proxy(this._clickHandler, this)
-     }
+    document.body.append(this._overlay);
 
-     // getters
-
-     static get VERSION() {
-       return VERSION
-     }
-
-     static get Default() {
-       return Default
-     }
-
-     _zoom(e) {
-       var target = e.target
-
-       if (!target || target.tagName !== 'IMG') return
-
-       if (this._$body.hasClass(ClassName.ZOOM_OVERLAY_OPEN)) return
-
-       if (e.metaKey || e.ctrlKey) {
-         return window.open((e.target.getAttribute('data-original') || e.target.src), '_blank')
-       }
-
-       if (target.width >= ($(window).width() - ZOOM_OFFSET)) return
+    this._calculateZoom();
+    this._triggerAnimation();
+  }
 
-       this._activeZoomClose(true)
-
-       this._activeZoom = new Zoom(target)
-       this._activeZoom.zoomImage()
-
-       // todo(fat): probably worth throttling this
-       this._$window.on(Event.SCROLL, $.proxy(this._scrollHandler, this))
-
-       this._$document.on(Event.KEYUP, $.proxy(this._keyHandler, this))
-       this._$document.on(Event.TOUCHSTART, $.proxy(this._touchStart, this))
-
-       // we use a capturing phase here to prevent unintended js events
-       // sadly no useCapture in jquery api (http://bugs.jquery.com/ticket/14953)
-       if (document.addEventListener) {
-         document.addEventListener('click', this._boundClick, true)
-       } else {
-         document.attachEvent('onclick', this._boundClick, true)
-       }
-
-       if ('bubbles' in e) {
-         if (e.bubbles) e.stopPropagation()
-       } else {
-         // Internet Explorer before version 9
-         e.cancelBubble = true
-       }
-     }
-
-     _activeZoomClose(forceDispose) {
-       if (!this._activeZoom) return
-
-       if (forceDispose) {
-         this._activeZoom.dispose()
-       } else {
-         this._activeZoom.close()
-       }
+  _calculateZoom() {
+    // eslint-disable-next-line no-unused-expressions
+    this._targetImage.scrollWidth; // Repaint before animating
 
-       this._$window.off(EVENT_KEY)
-       this._$document.off(EVENT_KEY)
+    const originalFullImageWidth = this._fullWidth;
+    const originalFullImageHeight = this._fullHeight;
 
-       document.removeEventListener('click', this._boundClick, true)
+    const maxScaleFactor = originalFullImageWidth / this._targetImage.width;
 
-       this._activeZoom = null
-     }
+    const viewportHeight = (window.scrollHeight - ZOOM_OFFSET);
+    const viewportWidth = (window.scrollWidth - ZOOM_OFFSET);
 
-     _scrollHandler(e) {
-       if (this._initialScrollPosition === null) this._initialScrollPosition = $(window).scrollTop()
-       var deltaY = this._initialScrollPosition - $(window).scrollTop()
-       if (Math.abs(deltaY) >= 40) this._activeZoomClose()
-     }
+    const imageAspectRatio = originalFullImageWidth / originalFullImageHeight;
+    const viewportAspectRatio = viewportWidth / viewportHeight;
 
-     _keyHandler(e) {
-       if (e.keyCode === 27) this._activeZoomClose()
-     }
+    if (originalFullImageWidth < viewportWidth && originalFullImageHeight < viewportHeight) {
+      this._imgScaleFactor = maxScaleFactor;
+    } else if (imageAspectRatio < viewportAspectRatio) {
+      this._imgScaleFactor = (viewportHeight / originalFullImageHeight) * maxScaleFactor;
+    } else {
+      this._imgScaleFactor = (viewportWidth / originalFullImageWidth) * maxScaleFactor;
+    }
+  }
 
-     _clickHandler(e) {
-       if (e.preventDefault) e.preventDefault()
-       else event.returnValue = false
+  _triggerAnimation() {
+    // eslint-disable-next-line no-unused-expressions
+    this._targetImage.scrollWidth; // Repaint before animating
 
-       if ('bubbles' in e) {
-         if (e.bubbles) e.stopPropagation()
-       } else {
-         // Internet Explorer before version 9
-         e.cancelBubble = true
-       }
+    const imageOffset = {
+      top: this._targetImage.offsetTop,
+      left: this._targetImage.offsetLeft
+    };
+    const { scrollTop, scrollHeight, scrollWidth } = window;
 
-       this._activeZoomClose()
-     }
+    const viewportY = scrollTop + (scrollHeight / 2);
+    const viewportX = (scrollWidth / 2);
 
-     _touchStart(e) {
-       this._initialTouchPosition = e.touches[0].pageY
-       $(e.target).on(Event.TOUCHMOVE, $.proxy(this._touchMove, this))
-     }
+    const imageCenterY = imageOffset.top + (this._targetImage.height / 2);
+    const imageCenterX = imageOffset.left + (this._targetImage.width / 2);
 
-     _touchMove(e) {
-       if (Math.abs(e.touches[0].pageY - this._initialTouchPosition) > 10) {
-         this._activeZoomClose()
-         $(e.target).off(Event.TOUCHMOVE)
-       }
-     }
+    this._translateY = viewportY - imageCenterY;
+    this._translateX = viewportX - imageCenterX;
 
-     listen() {
-       this._$body.on(Event.CLICK, DATA_API, $.proxy(this._zoom, this))
-     }
-   }
+    const targetTransform = `scale(${this._imgScaleFactor})`;
+    const imageWrapTransform = `translate(${this._translateX}px, ${this._translateY}px)`;
 
-   class Zoom {
+    this._targetImage.style.transform = targetTransform;
+    this._targetImage.style['-webkit-transform'] = this._targetImage.style.transform;
+    this._targetImage.style['-ms-transform'] = this._targetImage.style.transform;
 
-     constructor(img) {
-       this._fullHeight      = null
-       this._fullWidth       = null
-       this._overlay         = null
-       this._targetImageWrap = null
+    this._targetImageWrap.style.transform = imageWrapTransform;
+    this._targetImageWrap.style['-webkit-transform'] = this._targetImageWrap.style.transform;
+    this._targetImageWrap.style['-ms-transform'] = this._targetImageWrap.style.transform;
 
-       this._targetImage = img
+    this._body.classList.add(CLASS_NAME_ZOOM_OVERLAY_OPEN);
+  }
 
-       this._$body = $(document.body)
-     }
+  close() {
+    this._body.classList.remove(CLASS_NAME_ZOOM_OVERLAY_OPEN);
+    this._body.classList.add(CLASS_NAME_ZOOM_OVERLAY_TRANSITIONING);
 
-     zoomImage() {
-       var img = document.createElement('img')
-       img.onload = $.proxy(function () {
-         this._fullHeight = Number(img.height)
-         this._fullWidth = Number(img.width)
-         this._zoomOriginal()
-       }, this)
-       img.src = this._targetImage.src
-     }
-
-     _zoomOriginal() {
-       this._targetImageWrap           = document.createElement('div')
-       this._targetImageWrap.className = ClassName.ZOOM_IMG_WRAP
-
-       this._targetImage.parentNode.insertBefore(this._targetImageWrap, this._targetImage)
-       this._targetImageWrap.appendChild(this._targetImage)
-
-       $(this._targetImage)
-         .addClass(ClassName.ZOOM_IMG)
-         .attr('data-action', Data.ZOOM_OUT)
-
-       this._overlay           = document.createElement('div')
-       this._overlay.className = ClassName.ZOOM_OVERLAY
-
-       document.body.appendChild(this._overlay)
-
-       this._calculateZoom()
-       this._triggerAnimation()
-     }
-
-     _calculateZoom() {
-       this._targetImage.offsetWidth // repaint before animating
-
-       var originalFullImageWidth  = this._fullWidth
-       var originalFullImageHeight = this._fullHeight
-
-       var scrollTop = $(window).scrollTop()
-
-       var maxScaleFactor = originalFullImageWidth / this._targetImage.width
-
-       var viewportHeight = ($(window).height() - ZOOM_OFFSET)
-       var viewportWidth  = ($(window).width() - ZOOM_OFFSET)
-
-       var imageAspectRatio    = originalFullImageWidth / originalFullImageHeight
-       var viewportAspectRatio = viewportWidth / viewportHeight
-
-       if (originalFullImageWidth < viewportWidth && originalFullImageHeight < viewportHeight) {
-         this._imgScaleFactor = maxScaleFactor
-
-       } else if (imageAspectRatio < viewportAspectRatio) {
-         this._imgScaleFactor = (viewportHeight / originalFullImageHeight) * maxScaleFactor
-
-       } else {
-         this._imgScaleFactor = (viewportWidth / originalFullImageWidth) * maxScaleFactor
-       }
-     }
-
-     _triggerAnimation() {
-       this._targetImage.offsetWidth // repaint before animating
-
-       var imageOffset = $(this._targetImage).offset()
-       var scrollTop   = $(window).scrollTop()
-
-       var viewportY = scrollTop + ($(window).height() / 2)
-       var viewportX = ($(window).width() / 2)
-
-       var imageCenterY = imageOffset.top + (this._targetImage.height / 2)
-       var imageCenterX = imageOffset.left + (this._targetImage.width / 2)
-
-       this._translateY = viewportY - imageCenterY
-       this._translateX = viewportX - imageCenterX
-
-       var targetTransform = 'scale(' + this._imgScaleFactor + ')'
-       var imageWrapTransform = 'translate(' + this._translateX + 'px, ' + this._translateY + 'px)'
-
-       $(this._targetImage)
-         .css({
-           '-webkit-transform': targetTransform,
-               '-ms-transform': targetTransform,
-                   'transform': targetTransform
-         })
-
-       $(this._targetImageWrap)
-         .css({
-           '-webkit-transform': imageWrapTransform,
-               '-ms-transform': imageWrapTransform,
-                   'transform': imageWrapTransform
-         })
-
-       this._$body.addClass(ClassName.ZOOM_OVERLAY_OPEN)
-     }
-
-     close() {
-       this._$body
-         .removeClass(ClassName.ZOOM_OVERLAY_OPEN)
-         .addClass(ClassName.ZOOM_OVERLAY_TRANSITIONING)
-
-       // we use setStyle here so that the correct vender prefix for transform is used
-       $(this._targetImage)
-         .css({
-           '-webkit-transform': '',
-               '-ms-transform': '',
-                   'transform': ''
-         })
-
-       $(this._targetImageWrap)
-         .css({
-           '-webkit-transform': '',
-               '-ms-transform': '',
-                   'transform': ''
-         })
-
-       if (!Util.supportsTransitionEnd()) {
-         return this.dispose()
-       }
-
-       $(this._targetImage)
-         .one(Util.TRANSITION_END, $.proxy(this.dispose, this))
-         .emulateTransitionEnd(300)
-     }
-
-     dispose() {
-       if (this._targetImageWrap && this._targetImageWrap.parentNode) {
-         $(this._targetImage)
-           .removeClass(ClassName.ZOOM_IMG)
-           .attr('data-action', Data.ZOOM)
-
-         this._targetImageWrap.parentNode.replaceChild(this._targetImage, this._targetImageWrap)
-         this._overlay.parentNode.removeChild(this._overlay)
-
-         this._$body.removeClass(ClassName.ZOOM_OVERLAY_TRANSITIONING)
-       }
-     }
-   }
-
-  // wait for dom ready (incase script included before body)
-  $(function () {
-    new ZoomService().listen()
-  })
-
-})(jQuery)
-
-export default Zoom
+    this._targetImage.transform = '';
+    this._targetImage['-webkit-transform'] = this._targetImage.transform;
+    this._targetImage['-ms-transform'] = this._targetImage.transform;
+
+    this._targetImageWrap.transform = '';
+    this._targetImageWrap['-webkit-transform'] = this._targetImageWrap.transform;
+    this._targetImageWrap['-ms-transform'] = this._targetImageWrap.transform;
+
+    EventHandler.one(TRANSITION_END, this.dispose.bind(this));
+    EventHandler.emulateTransitionEnd(300);
+  }
+
+  dispose() {
+    if (this._targetImageWrap && this._targetImageWrap.parentNode) {
+      this._targetImage.classList.remove(CLASS_NAME_ZOOM_IMG);
+      this._targetImage.dataset.action = DATA_ZOOM;
+
+      this._targetImageWrap.parentNode.replaceChild(this._targetImage, this._targetImageWrap);
+      this._overlay.remove();
+
+      this._body.classList.remove(CLASS_NAME_ZOOM_OVERLAY_TRANSITIONING);
+    }
+  }
+}
+
+/**
+ * ------------------------------------------------------------------------
+ * Data Api implementation
+ * ------------------------------------------------------------------------
+ */
+
+EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
+  new ZoomService().listen();
+});
+
+/**
+ * ------------------------------------------------------------------------
+ * jQuery
+ * ------------------------------------------------------------------------
+ * add .Zoom to jQuery only if jQuery is present
+ */
+
+defineJQueryPlugin(NAME, Zoom);
+
+export default Zoom;

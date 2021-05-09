@@ -71,6 +71,7 @@
           border-left: $nav-bordered-border-width solid;
         }
 
+        /* stylelint-disable selector-max-class */
         &.active {
           &,
           &:hover,
@@ -78,6 +79,7 @@
             border-left-color: $nav-bordered-color-active;
           }
         }
+        /* stylelint-enable */
       }
     }
 
@@ -87,11 +89,11 @@
 
     .nav-divider {
       height: 0;
-      overflow: hidden;
-      border-top: 1px solid $nav-bordered-divider-color;
       margin-top: $nav-bordered-divider-margin-top;
       margin-bottom: $nav-bordered-divider-margin-bottom;
       margin-left: $spacer * 1.7;
+      overflow: hidden;
+      border-top: 1px solid $nav-bordered-divider-color;
     }
   }
 }

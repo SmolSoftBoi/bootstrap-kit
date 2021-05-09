@@ -33,9 +33,9 @@
     margin-right: $statcard-delta-indicator-margin-x;
     margin-left: $statcard-delta-indicator-margin-x;
     vertical-align: middle;
+    content: "";
     border-right: $statcard-delta-indicator-border-width solid transparent;
     border-left: $statcard-delta-indicator-border-width solid transparent;
-    content: "";
   }
 }
 

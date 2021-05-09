@@ -1,7 +1,7 @@
 // Dashhead
 
 .dashhead {
-  @include clearfix;
+  @include clearfix ();
 }
 
 .dashhead-titles {
@@ -17,8 +17,8 @@
 .dashhead-subtitle {
   margin-top: 0;
   margin-bottom: $dashhead-subtitle-margin-bottom;
-  font-weight: 400;
   font-size: 85%;
+  font-weight: 400;
   color: $dashhead-subtitle-color;
   text-transform: uppercase;
 }

@@ -39,8 +39,8 @@
   font-size: $nav-icon-brand-font-size;
   line-height: 1;
   color: $nav-icon-brand-color;
-  background-color: $nav-icon-brand-bg;
   text-align: center;
+  background-color: $nav-icon-brand-bg;
   border-bottom: 0;
 
   &:hover {
@@ -106,6 +106,7 @@
       > .nav-link {
         border-left: $nav-icon-link-border-width solid $nav-icon-link-border-color;
 
+        /* stylelint-disable selector-max-class */
         &.active {
           &,
           &:focus,
@@ -114,11 +115,13 @@
             color: $nav-icon-link-active-color;
             background-color: $nav-icon-link-active-bg;
 
+            /* stylelint-disable-next-line selector-max-compound-selectors */
             .label {
-              border-color: $nav-icon-link-active-bg;;
+              border-color: $nav-icon-link-active-bg;
             }
           }
         }
+        /* stylelint-enable */
       }
 
       @include media-breakpoint-up(md) {
@@ -145,6 +148,6 @@
   .nav-icon-slider {
     overflow: auto;
     white-space: nowrap;
-    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
   }
 }

@@ -22,15 +22,15 @@
         height: 0;
         margin-left: $media-list-conversation-body-text-padding-x * .1;
         vertical-align: middle;
+        content: "";
         border-top: ($border-width * 6) solid transparent;
         border-right: ($border-width * 6) solid $media-list-conversation-body-text-bg;
         border-bottom: ($border-width * 6) solid transparent;
-        content: "";
       }
     }
 
     + .media-body-text {
-      media-top: $spacer * .3;
+      margin-top: $spacer * .3;
     }
   }
 

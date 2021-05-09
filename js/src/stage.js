@@ -1,241 +1,233 @@
+import { defineJQueryPlugin, getElementFromSelector, typeCheckConfig } from 'bootstrap/js/src/util';
+import Data from 'bootstrap/js/src/dom/data';
+import EventHandler from 'bootstrap/js/src/dom/event-handler';
+import Manipulator from 'bootstrap/js/src/dom/manipulator';
+import BaseComponent from 'bootstrap/js/src/base-component';
+
 /**
- * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0): stage.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * --------------------------------------------------------------------------
+ * ------------------------------------------------------------------------
+ * Constants
+ * ------------------------------------------------------------------------
  */
 
-const Stage = (($) => {
+const NAME = 'stage';
+const DATA_KEY = 'bs.stage';
+const EVENT_KEY = `.${DATA_KEY}`;
+const DATA_API_KEY = '.data-api';
 
-  /**
-   * ------------------------------------------------------------------------
-   * Constants
-   * ------------------------------------------------------------------------
-   */
+const TRANSITION_END = 'transitionend';
 
-  const NAME                = 'stage'
-  const DATA_KEY            = 'bs.stage'
-  const VERSION             = 'v4.0.0'
-  const DATA_API            = '[data-toggle="stage"]'
-  const EVENT_KEY           = `.${DATA_KEY}`
-  const DATA_API_KEY        = '.data-api'
-  const JQUERY_NO_CONFLICT  = $.fn[NAME]
-  const TRANSITION_DURATION = 150
+const Default = {
+  easing: 'cubic-bezier(.2, .7, .5, 1)',
+  duration: 300,
+  delay: 0,
+  distance: 250,
+  hiddenElements: '#sidebar'
+};
 
-  const Default = {
-    easing         : 'cubic-bezier(.2,.7,.5,1)',
-    duration       : 300,
-    delay          : 0,
-    distance       : 250,
-    hiddenElements : '#sidebar'
-  }
+const DefaultType = {
+  easing: 'string',
+  duration: 'number',
+  delay: 'number',
+  distance: 'number',
+  hiddenElements: 'string'
+};
 
-  const Event = {
-    TOUCHMOVE      : `touchmove${EVENT_KEY}`,
-    KEYDOWN        : `keydown${EVENT_KEY}`,
-    OPEN           : `open${EVENT_KEY}`,
-    OPENED         : `opened${EVENT_KEY}`,
-    CLOSE          : `close${EVENT_KEY}`,
-    CLOSED         : `closed${EVENT_KEY}`,
-    CLICK          : `click${EVENT_KEY}`,
-    CLICK_DATA_API : `click${EVENT_KEY}${DATA_API_KEY}`
-  }
+const EVENT_TOUCHMOVE = `touchmove${EVENT_KEY}`;
+const EVENT_KEYDOWN = `keydown${EVENT_KEY}`;
+const EVENT_OPEN = `open${EVENT_KEY}`;
+const EVENT_OPENED = `opened${EVENT_KEY}`;
+const EVENT_CLOSE = `close${EVENT_KEY}`;
+const EVENT_CLOSED = `closed${EVENT_KEY}`;
+const EVENT_CLICK = `click${EVENT_KEY}`;
+const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`;
 
-  const ClassName = {
-    STAGE_OPEN : 'stage-open',
-    HIDDEN     : 'hidden'
-  }
+const CLASS_NAME_STAGE_OPEN = 'stage-open';
+const CLASS_NAME_HIDDEN = 'hidden';
 
+const SELECTOR_TOGGLE = '[data-toggle="stage"]';
 
-  /**
+/**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-   class Stage {
+class Stage extends BaseComponent {
+  constructor(element, config) {
+    super(element);
 
-     constructor(element, config) {
-       this._element  = element
-       this._config   = config
-     }
-
-     // getters
-
-     static get VERSION() {
-       return VERSION
-     }
-
-     static get Default() {
-       return Default
-     }
-
-     // private
-
-     _isOpen() {
-       return $(this._element).hasClass(ClassName.STAGE_OPEN)
-     }
-
-     _complete() {
-       $(document.body).css('overflow', 'auto')
-
-       if ('ontouchstart' in document.documentElement) {
-         $(document).off(Event.TOUCHMOVE)
-       }
-
-       $(this._config.hiddenElements).addClass(ClassName.HIDDEN)
-
-       $(this._element)
-         .removeClass(ClassName.STAGE_OPEN)
-         .css({
-           '-webkit-transition': '',
-               '-ms-transition': '',
-                   'transition': ''
-         })
-         .css({
-           '-webkit-transform': '',
-               '-ms-transform': '',
-                   'transform': ''
-         })
-         .trigger(Event.CLOSED)
-     }
-
-     // public
-
-     toggle() {
-       if (this._isOpen()) {
-         this.close()
-       } else {
-         this.open()
-       }
-     }
-
-     open() {
-       $(document.body).css('overflow', 'hidden')
-
-       if ('ontouchstart' in document.documentElement) {
-         $(document).on(Event.TOUCHMOVE, function (e) {
-           e.preventDefault()
-         })
-       }
-
-       $(this._config.hiddenElements).removeClass(ClassName.HIDDEN)
-
-       $(window).one(Event.KEYDOWN, $.proxy(function (e) {
-         e.which == 27 && this.close()
-       }, this))
-
-       $(this._element)
-         .on(Event.CLICK, $.proxy(this.close, this))
-         .trigger(Event.OPEN)
-         .addClass(ClassName.STAGE_OPEN)
-
-       if (!Util.supportsTransitionEnd()) {
-         $(this._element)
-           .css({
-             'left': this._config.distance + 'px',
-             'position': 'relative'
-           })
-           .trigger(Event.OPENED)
-         return
-       }
-
-       $(this._element)
-         .css({
-           '-webkit-transition': '-webkit-transform ' + this._config.duration + 'ms ' + this._config.easing,
-               '-ms-transition': '-ms-transform ' + this._config.duration + 'ms ' + this._config.easing,
-                   'transition': 'transform ' + this._config.duration + 'ms ' + this._config.easing
-         })
-
-       this._element.offsetWidth // force reflow
-
-       $(this._element)
-         .css({
-           '-webkit-transform': 'translateX(' + this._config.distance + 'px)',
-               '-ms-transform': 'translateX(' + this._config.distance + 'px)',
-                   'transform': 'translateX(' + this._config.distance + 'px)'
-         })
-         .one(Util.TRANSITION_END, () => {
-           $(this._element).trigger(Event.OPENED)
-         })
-         .emulateTransitionEnd(this._config.duration)
-     }
-
-     close() {
-       $(window).off(Event.KEYDOWN)
-
-       if (!Util.supportsTransitionEnd()) {
-         $(this._element)
-           .trigger(Event.CLOSE)
-           .css({ 'left': '', 'position': '' })
-           .off(Event.CLICK)
-
-         return this._complete()
-       }
-
-       $(this._element)
-         .trigger(Event.CLOSE)
-         .off(Event.CLICK)
-         .css({
-           '-webkit-transform': 'none',
-               '-ms-transform': 'none',
-                   'transform': 'none'
-         })
-         .one(Util.TRANSITION_END, $.proxy(this._complete, this))
-         .emulateTransitionEnd(this._config.duration)
-     }
-
-     // static
-
-     static _jQueryInterface(config) {
-       return this.each(function () {
-         var $this   = $(this)
-         var data    = $this.data(DATA_KEY)
-         var _config = $.extend(
-           {},
-           Default,
-           $this.data(),
-           typeof config === 'object' && config
-         )
-
-         if (!data) $this.data(DATA_KEY, (data = new Stage(this, _config)))
-         if (typeof config === 'string') data[config]()
-       })
-     }
+    this._config = this._getConfig(config);
   }
 
-  /**
-   * ------------------------------------------------------------------------
-   * jQuery
-   * ------------------------------------------------------------------------
-   */
+  // Getters
 
-  $.fn[NAME]             = Stage._jQueryInterface
-  $.fn[NAME].Constructor = Stage
-  $.fn[NAME].noConflict  = function () {
-    $.fn[NAME] = JQUERY_NO_CONFLICT
-    return Stage._jQueryInterface
+  static get Default() {
+    return Default;
   }
 
-  /**
-   * ------------------------------------------------------------------------
-   * Data Api implementation
-   * ------------------------------------------------------------------------
-   */
+  static get DATA_KEY() {
+    return DATA_KEY;
+  }
 
-  $(document).on(Event.CLICK_DATA_API, DATA_API, function () {
-    var config  = $(this).data()
-    var $target = $(this.getAttribute('data-target'))
+  // Private
 
-    if (!$target.data(DATA_KEY)) {
-     $target.stage(config)
+  _getConfig(config) {
+    config = {
+      ...Default,
+      ...config
+    };
+
+    typeCheckConfig(NAME, config, DefaultType);
+
+    return config;
+  }
+
+  _isOpen() {
+    return this._element.classList.contains(CLASS_NAME_STAGE_OPEN);
+  }
+
+  _complete() {
+    document.body.style.overflow = 'auto';
+
+    if ('ontouchstart' in document.documentElement) {
+      EventHandler.off(document, EVENT_TOUCHMOVE);
     }
 
-    $target.stage('toggle')
-  })
+    this._config.hiddenElements.classList.add(CLASS_NAME_HIDDEN);
 
-  return Stage
+    this._element.classList.remove(CLASS_NAME_STAGE_OPEN);
+    this._element.style.transition = '';
+    this._element.style.transform = '';
+    this._element.style['-webkit-transition'] = this._element.style.transition;
+    this._element.style['-webkit-transform'] = this._element.style.transform;
+    this._element.style['-ms-transition'] = this._element.style.transition;
+    this._element.style['-ms-transform'] = this._element.style.transform;
+    EventHandler.trigger(this._element, EVENT_CLOSED);
+  }
 
-})(jQuery)
+  // Public
 
-export default Stage
+  toggle() {
+    if (this._isOpen()) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  open() {
+    document.body.style.overflow = 'hidden';
+
+    if ('ontouchstart' in document.documentElement) {
+      EventHandler.on(document, EVENT_TOUCHMOVE, event => {
+        event.preventDefault();
+      });
+    }
+
+    this._config.hiddenElements.classList.remove(CLASS_NAME_HIDDEN);
+
+    EventHandler.one(window, EVENT_KEYDOWN, event => {
+      event.which = 27 && this.close();
+    });
+
+    EventHandler.on(this._element, EVENT_CLICK, this.close.bind(this));
+    EventHandler.trigger(this._element, EVENT_OPEN);
+
+    this._element.classList.add(CLASS_NAME_STAGE_OPEN);
+
+    this._element.style.transition = `transform ${this._config.duration}ms ${this._config.easing}`;
+    this._element.style['-webkit-transition'] = `-webkit-${this._element.style.transition}`;
+    this._element.style['-ms-transition'] = `-ms-${this._element.style.transition}`;
+
+    // eslint-disable-next-line no-unused-expressions
+    this._element.scrollWidth; // Force reflow
+
+    this._element.style.transform = `translateX(${this._config.distance}px)`;
+    this._element.style['-webkit-transform'] = `-webkit-${this._element.style.transform}`;
+    this._element.style['-ms-transform'] = `-ms-${this._element.style.transform}`;
+
+    EventHandler.one(this._element, TRANSITION_END, () => {
+      EventHandler.trigger(this._element, EVENT_OPENED);
+    });
+    EventHandler.emulateTransitionEnd(this._element, this._config.duration);
+  }
+
+  close() {
+    EventHandler.off(window, EVENT_KEYDOWN);
+
+    EventHandler.trigger(this._element, EVENT_CLOSE);
+    EventHandler.off(this._element, EVENT_CLICK);
+
+    this._element.style.transform = 'none';
+    this._element.style['-webkit-transform'] = this._element.style.transform;
+    this._element.style['-ms-transform'] = this._element.style.transform;
+
+    EventHandler.one(this._element, TRANSITION_END, this._complete.bind(this));
+    EventHandler.emulateTransitionEnd(this._element, this._config.duration);
+  }
+
+  // Static
+
+  static stageInterface(element, config) {
+    let data = Data.get(element, DATA_KEY);
+    let _config = {
+      ...Default,
+      ...Manipulator.getDataAttributes(element)
+    };
+
+    if (typeof config === 'object') {
+      _config = {
+        ..._config,
+        ...config
+      };
+    }
+
+    if (!data) {
+      data = new Stage(element, _config);
+    }
+
+    if (typeof config === 'string') {
+      if (typeof data[config] === 'undefined') {
+        throw new TypeError(`No method named "${config}"`);
+      }
+
+      data[config]();
+    }
+  }
+
+  static jQueryInterface(config) {
+    return this.each(function () {
+      Stage.stageInterface(this, config);
+    });
+  }
+
+  static dataApiClickHandler() {
+    const target = getElementFromSelector(this);
+
+    if (!target) {
+      return;
+    }
+
+    Stage.stageInterface(target, 'toggle');
+  }
+}
+
+/**
+ * ------------------------------------------------------------------------
+ * Data Api implementation
+ * ------------------------------------------------------------------------
+ */
+
+EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_TOGGLE, Stage.dataApiClickHandler);
+
+/**
+ * ------------------------------------------------------------------------
+ * jQuery
+ * ------------------------------------------------------------------------
+ * add .Carousel to jQuery only if jQuery is present
+ */
+
+defineJQueryPlugin(NAME, Stage);
+
+export default Stage;

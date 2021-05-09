@@ -32,12 +32,12 @@ const EVENT_OPEN = `open${EVENT_KEY}`;
 const EVENT_OPENED = `opened${EVENT_KEY}`;
 const EVENT_CLOSE = `close${EVENT_KEY}`;
 const EVENT_CLOSED = `closed${EVENT_KEY}`;
-const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`
+const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`;
 
-const COLAPSE_EVENT_SHOW = `show${COLLAPSE_EVENT_KEY}`;
+const COLLAPSE_EVENT_SHOW = `show${COLLAPSE_EVENT_KEY}`;
 const COLLAPSE_EVENT_SHOWN = `shown${COLLAPSE_EVENT_KEY}`;
-const COLAPSE_EVENT_HIDE = `hide${COLLAPSE_EVENT_KEY}`;
-const COLAPSE_EVENT_HIDDEN = `hidden${COLLAPSE_EVENT_KEY}`;
+const COLLAPSE_EVENT_HIDE = `hide${COLLAPSE_EVENT_KEY}`;
+const COLLAPSE_EVENT_HIDDEN = `hidden${COLLAPSE_EVENT_KEY}`;
 
 const CLASS_NAME_OPENING = 'opening';
 const CLASS_NAME_OPEN = 'open';
@@ -74,7 +74,7 @@ class Navbar extends BaseComponent {
   }
 
   static get DATA_KEY() {
-    return DATA_KEY
+    return DATA_KEY;
   }
 
   // Public
@@ -137,7 +137,7 @@ class Navbar extends BaseComponent {
   // Static
 
   static navbarInterface(element, config) {
-    let data = Data.get(element, DATA_KEY)
+    let data = Data.get(element, DATA_KEY);
     let _config = {
       ...Default,
       ...Manipulator.getDataAttributes(element)
@@ -147,7 +147,7 @@ class Navbar extends BaseComponent {
       _config = {
         ..._config,
         ...config
-      }
+      };
     }
 
     if (!data) {
@@ -180,7 +180,7 @@ EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
   const navbars = SelectorEngine.find(SELECTOR_NAVBAR);
 
   for (let i = 0, len = navbars.length; i < len; i++) {
-    Navbar.navbarInterface(navbars[i], Data.get(navbars[i], DATA_KEY))
+    Navbar.navbarInterface(navbars[i], Data.get(navbars[i], DATA_KEY));
   }
 });
 
@@ -188,6 +188,7 @@ EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
  * ------------------------------------------------------------------------
  * jQuery
  * ------------------------------------------------------------------------
+ * add .Navar to jQuery only if jQuery is present
  */
 
 export default Navbar;

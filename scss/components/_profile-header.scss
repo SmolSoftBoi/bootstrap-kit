@@ -67,8 +67,8 @@
   left: 0;
 
   .nav {
-    border-bottom: 0;
     vertical-align: top;
+    border-bottom: 0;
   }
 
   .nav-link {
@@ -96,10 +96,10 @@
       bottom: 0;
       left: 50%;
       margin-left: $profile-header-nav-active-margin-left;
+      content: "";
       border-right: $profile-header-nav-active-border-width solid transparent;
       border-bottom: $profile-header-nav-active-border-width solid $nav-tabs-active-link-hover-bg;
       border-left: $profile-header-nav-active-border-width solid transparent;
-      content: "";
     }
   }
 }

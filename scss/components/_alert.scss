@@ -1,5 +1,11 @@
 // Alert
 
+.alert {
+  .alert-full {
+    border-radius: 0;
+  }
+}
+
 .alert-dark {
   @include alert-variant(rgba(0, 0, 0, .9), rgba(0, 0, 0, .8), $white);
 
@@ -11,8 +17,4 @@
       color: $white;
     }
   }
-}
-
-.alert-full {
-  border-radius: 0 !important;
 }

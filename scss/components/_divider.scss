@@ -13,8 +13,8 @@
     display: block;
     width: 100%;
     height: $hr-divider-height;
-    background-color: $hr-divider-before-bg;
     content: "";
+    background-color: $hr-divider-before-bg;
   }
 
   .hr-divider-content {

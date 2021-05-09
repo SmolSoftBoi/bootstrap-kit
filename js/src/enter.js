@@ -26,11 +26,11 @@ const DefaultType = {
   easing: 'string',
   duration: 'number',
   delay: 'number'
-}
+};
 
 const EVENT_SCROLL = `scroll${EVENT_KEY}`;
 const EVENT_ENTER = `enter${EVENT_KEY}`;
-const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`
+const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`;
 
 const SELECTOR_DATA_TRANSITION = '[data-bs-transition="entrance"]';
 
@@ -58,7 +58,7 @@ class Enter extends BaseComponent {
   }
 
   static get DATA_KEY() {
-    return DATA_KEY
+    return DATA_KEY;
   }
 
   // Public
@@ -122,17 +122,17 @@ class Enter extends BaseComponent {
   // Static
 
   static enterInterface(element, config) {
-    let data = Data.get(element, DATA_KEY)
+    let data = Data.get(element, DATA_KEY);
     let _config = {
       ...Default,
       ...Manipulator.getDataAttributes(element)
-    }
+    };
 
     if (typeof config === 'object') {
       _config = {
         ..._config,
         ...config
-      }
+      };
     }
 
     if (!data) {
@@ -149,7 +149,6 @@ class Enter extends BaseComponent {
       Enter.enterInterface(this, config);
     });
   }
-
 }
 
 /**
@@ -161,8 +160,8 @@ class Enter extends BaseComponent {
 EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
   const enters = SelectorEngine.find(SELECTOR_DATA_TRANSITION);
 
-  for (let i = 0, len = carousels.length; i < len; i++) {
-    Carousel.carouselInterface(enters[i], Data.get(enters[i], DATA_KEY))
+  for (let i = 0, len = enters.length; i < len; i++) {
+    Enter.enterInterface(enters[i], Data.get(enters[i], DATA_KEY));
   }
 });
 

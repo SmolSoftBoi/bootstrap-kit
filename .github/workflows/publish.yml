@@ -1,4 +1,4 @@
-name: Node-CI
+name: Publish
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
 
   publish-npm:
     # publish only if we are on our own repo
-    if: github.repository == 'homebridge/homebridge' && github.event_name == 'release'
+    if: github.repository == 'EpicKris/bootstrap-kit' && github.event_name == 'release'
 
     needs: build # only run if build succeeds
 

@@ -137,22 +137,7 @@ class Navbar extends BaseComponent {
   // Static
 
   static navbarInterface(element, config) {
-    let data = Data.get(element, DATA_KEY);
-    let _config = {
-      ...Default,
-      ...Manipulator.getDataAttributes(element)
-    };
-
-    if (typeof config === 'object') {
-      _config = {
-        ..._config,
-        ...config
-      };
-    }
-
-    if (!data) {
-      data = new Navbar(element, _config);
-    }
+    const data = Navbar.getOrCreateInstance(element, config);
 
     if (typeof config === 'string') {
       if (typeof data[config] === 'undefined') {

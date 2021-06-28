@@ -110,7 +110,7 @@ class Navbar extends BaseComponent {
 
   _onShowNavbarCollapse() {
     if (this._config.scrollTop) {
-      this._html.scrollTop(Math.ceil(this._element.offsetTop));
+      this._html.scrollTop(Math.ceil(this._element.scrollTop));
     }
 
     EventHandler.trigger(this._element, EVENT_OPEN);

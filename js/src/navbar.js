@@ -1,7 +1,6 @@
 import { typeCheckConfig } from 'bootstrap/js/src/util';
 import Data from 'bootstrap/js/src/dom/data';
 import EventHandler from 'bootstrap/js/src/dom/event-handler';
-import Manipulator from 'bootstrap/js/src/dom/manipulator';
 import SelectorEngine from 'bootstrap/js/src/dom/selector-engine';
 import BaseComponent from 'bootstrap/js/src/base-component';
 import Collapse from 'bootstrap/js/src/collapse';

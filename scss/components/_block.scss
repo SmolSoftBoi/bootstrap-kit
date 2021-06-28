@@ -271,7 +271,7 @@ h1,
   font-weight: $block-label-font-weight;
   color: $primary;
   text-transform: $block-label-text-transform;
-  letter-spacing: $spacer / 4;
+  letter-spacing: $spacer * 0.25;
 }
 
 

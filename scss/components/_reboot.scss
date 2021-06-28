@@ -14,7 +14,7 @@ body {
   margin-top: $headings-margin-top;
 
   + %heading {
-    margin-top: $headings-margin-top / 2;
+    margin-top: $headings-margin-top * 0.5;
   }
 }
 

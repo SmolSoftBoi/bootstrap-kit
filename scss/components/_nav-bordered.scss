@@ -10,7 +10,7 @@
     // Pill Links
     > .nav-link {
       display: inline-block;
-      padding: ($spacer / 2) 0;
+      padding: ($spacer * 0.5) 0;
       font-weight: $nav-bordered-font-weight;
       color: $nav-bordered-color;
       border-bottom: $nav-bordered-border-width solid transparent;

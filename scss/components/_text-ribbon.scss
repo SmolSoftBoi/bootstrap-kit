@@ -21,7 +21,7 @@
 
   span {
     position: relative;
-    left: -($text-ribbon-min-width / 2);
+    left: -($text-ribbon-min-width * 0.5);
   }
 }
 

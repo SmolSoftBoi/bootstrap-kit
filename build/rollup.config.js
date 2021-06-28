@@ -6,7 +6,7 @@ const replace = require('@rollup/plugin-replace');
 const BUNDLE = process.env.BUNDLE === 'true';
 const ESM = process.env.ESM === 'true';
 
-let fileDest = `kit${ESM ? '.esm' : ''}`;
+let fileDestination = `kit${ESM ? '.esm' : ''}`;
 const external = ['@popperjs/core'];
 const plugins = [
   babel({
@@ -14,14 +14,15 @@ const plugins = [
     exclude: 'node_modules/**',
     // Include the helpers in the bundle, at most one copy of each
     babelHelpers: 'bundled'
-  })
+  }),
+  nodeResolve()
 ];
 const globals = {
   '@popperjs/core': 'Popper'
 };
 
 if (BUNDLE) {
-  fileDest += '.bundle';
+  fileDestination += '.bundle';
   // Remove last entry in external array to bundle Popper
   external.pop();
   delete globals['@popperjs/core'];
@@ -37,7 +38,7 @@ if (BUNDLE) {
 const rollupConfig = {
   input: path.resolve(__dirname, `../js/index.${ESM ? 'esm' : 'umd'}.js`),
   output: {
-    file: path.resolve(__dirname, `../dist/js/${fileDest}.js`),
+    file: path.resolve(__dirname, `../dist/js/${fileDestination}.js`),
     format: ESM ? 'esm' : 'umd',
     globals
   },

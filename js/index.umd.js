@@ -3,7 +3,6 @@
 import 'bootstrap/dist/js/bootstrap.bundle';
 
 import './src/affix';
-import './src/datepicker';
 
 import Enter from './src/enter';
 import ImageGrid from './src/image-grid';

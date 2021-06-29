@@ -1,6 +1,7 @@
 import { typeCheckConfig } from 'bootstrap/js/src/util';
 import Data from 'bootstrap/js/src/dom/data';
 import EventHandler from 'bootstrap/js/src/dom/event-handler';
+import Manipulator from 'bootstrap/js/src/dom/manipulator';
 import SelectorEngine from 'bootstrap/js/src/dom/selector-engine';
 import BaseComponent from 'bootstrap/js/src/base-component';
 import Collapse from 'bootstrap/js/src/collapse';
@@ -56,7 +57,7 @@ class Navbar extends BaseComponent {
     super(element);
 
     this._html = document.documentElement;
-    this._collapseNavbarElement = SelectorEngine.find(SELECTOR_NAVBAR_COLLAPSE, this._element);
+    this._collapseNavbarElement = SelectorEngine.findOne(SELECTOR_NAVBAR_COLLAPSE, this._element);
     this._config = this._getConfig(config);
 
     this._addEventListeners();
@@ -117,8 +118,8 @@ class Navbar extends BaseComponent {
   }
 
   _onShownNavbarCollapse() {
-    this.element.classList.add(CLASS_NAME_OPEN);
-    this.element.classList.remove(CLASS_NAME_OPENING);
+    this._element.classList.add(CLASS_NAME_OPEN);
+    this._element.classList.remove(CLASS_NAME_OPENING);
     EventHandler.trigger(this._element, EVENT_OPENED);
   }
 
@@ -136,7 +137,22 @@ class Navbar extends BaseComponent {
   // Static
 
   static navbarInterface(element, config) {
-    const data = Navbar.getOrCreateInstance(element, config);
+    let data = Data.get(element, DATA_KEY);
+    let _config = {
+      ...Default,
+      ...Manipulator.getDataAttributes(element)
+    };
+
+    if (typeof config === 'object') {
+      _config = {
+        ..._config,
+        ...config
+      };
+    }
+
+    if (!data) {
+      data = new Navbar(element, _config);
+    }
 
     if (typeof config === 'string') {
       if (typeof data[config] === 'undefined') {

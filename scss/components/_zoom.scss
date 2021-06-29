@@ -38,9 +38,10 @@ img[data-action="zoom"] {
 }
 
 .zoom-overlay-open {
+  overflow: hidden;
+
   .zoom-overlay {
-    filter: "alpha(opacity=100)";
-    opacity: 1;
+    opacity: $modal-backdrop-opacity;;
   }
 
   .list-group-open {

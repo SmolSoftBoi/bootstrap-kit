@@ -1,6 +1,6 @@
 import EventHandler from 'bootstrap/js/src/dom/event-handler';
 import BaseComponent from 'bootstrap/js/src/base-component';
-import { defineJQueryPlugin } from 'bootstrap/js/src/util';
+import { defineJQueryPlugin, executeAfterTransition } from 'bootstrap/js/src/util';
 
 /**
  * ------------------------------------------------------------------------
@@ -79,7 +79,7 @@ class ZoomService extends BaseComponent {
       return window.open((target.getAttribute('data-original') || target.src), '_blank');
     }
 
-    if (target.width >= (window.scrollWidth() - ZOOM_OFFSET)) {
+    if (target.width >= (window.innerWidth - ZOOM_OFFSET)) {
       return;
     }
 
@@ -192,6 +192,8 @@ class Zoom {
 
     this._targetImage = element;
 
+    this._targetTransform = element.style.transform;
+
     this._body = document.body;
   }
 
@@ -230,15 +232,15 @@ class Zoom {
 
   _calculateZoom() {
     // eslint-disable-next-line no-unused-expressions
-    this._targetImage.scrollWidth; // Repaint before animating
+    this._targetImage.offsetWidth; // Repaint before animating
 
     const originalFullImageWidth = this._fullWidth;
     const originalFullImageHeight = this._fullHeight;
 
     const maxScaleFactor = originalFullImageWidth / this._targetImage.width;
 
-    const viewportHeight = (window.scrollHeight - ZOOM_OFFSET);
-    const viewportWidth = (window.scrollWidth - ZOOM_OFFSET);
+    const viewportHeight = (window.innerHeight - ZOOM_OFFSET);
+    const viewportWidth = (window.innerWidth - ZOOM_OFFSET);
 
     const imageAspectRatio = originalFullImageWidth / originalFullImageHeight;
     const viewportAspectRatio = viewportWidth / viewportHeight;
@@ -254,25 +256,28 @@ class Zoom {
 
   _triggerAnimation() {
     // eslint-disable-next-line no-unused-expressions
-    this._targetImage.scrollWidth; // Repaint before animating
+    this._targetImage.offsetWidth; // Repaint before animating
+
+    const rect = this._targetImage.getBoundingClientRect();
 
     const imageOffset = {
-      top: this._targetImage.offsetTop,
-      left: this._targetImage.offsetLeft
+      top: rect.top + window.pageYOffset,
+      left: rect.left + window.pageXOffset
     };
-    const { scrollTop, scrollHeight, scrollWidth } = window;
 
-    const viewportY = scrollTop + (scrollHeight / 2);
-    const viewportX = (scrollWidth / 2);
+    const scrollTop = window.pageYOffset;
 
-    const imageCenterY = imageOffset.top + (this._targetImage.height / 2);
-    const imageCenterX = imageOffset.left + (this._targetImage.width / 2);
+    const viewportY = scrollTop + (window.innerHeight / 2);
+    const viewportX = (window.innerWidth / 2);
+
+    const imageCenterY = imageOffset.top + (this._targetImage.offsetHeight / 2);
+    const imageCenterX = imageOffset.left + (this._targetImage.offsetWidth / 2);
 
     this._translateY = viewportY - imageCenterY;
     this._translateX = viewportX - imageCenterX;
 
     const targetTransform = `scale(${this._imgScaleFactor})`;
-    const imageWrapTransform = `translate(${this._translateX}px, ${this._translateY}px)`;
+    const imageWrapTransform = `translate3d(${this._translateX}px, ${this._translateY}px, 1px)`;
 
     this._targetImage.style.transform = targetTransform;
     this._targetImage.style['-webkit-transform'] = this._targetImage.style.transform;
@@ -289,16 +294,15 @@ class Zoom {
     this._body.classList.remove(CLASS_NAME_ZOOM_OVERLAY_OPEN);
     this._body.classList.add(CLASS_NAME_ZOOM_OVERLAY_TRANSITIONING);
 
-    this._targetImage.transform = '';
-    this._targetImage['-webkit-transform'] = this._targetImage.transform;
-    this._targetImage['-ms-transform'] = this._targetImage.transform;
+    this._targetImage.style.transform = this._targetTransform;
+    this._targetImage.style['-webkit-transform'] = this._targetImage.transform;
+    this._targetImage.style['-ms-transform'] = this._targetImage.transform;
 
-    this._targetImageWrap.transform = '';
-    this._targetImageWrap['-webkit-transform'] = this._targetImageWrap.transform;
-    this._targetImageWrap['-ms-transform'] = this._targetImageWrap.transform;
+    this._targetImageWrap.style.transform = '';
+    this._targetImageWrap.style['-webkit-transform'] = this._targetImageWrap.transform;
+    this._targetImageWrap.style['-ms-transform'] = this._targetImageWrap.transform;
 
-    EventHandler.one(TRANSITION_END, this.dispose.bind(this));
-    EventHandler.emulateTransitionEnd(300);
+    executeAfterTransition(this.dispose.bind(this), this._targetImage);
   }
 
   dispose() {

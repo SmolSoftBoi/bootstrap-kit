@@ -13,7 +13,6 @@ const DATA_KEY = 'bs.zoom';
 const EVENT_KEY = `.${DATA_KEY}`;
 const DATA_API_KEY = '.data-api';
 
-const TRANSITION_END = 'transitionend';
 const ZOOM_OFFSET = 80;
 
 const EVENT_CLICK = `click${EVENT_KEY}`;

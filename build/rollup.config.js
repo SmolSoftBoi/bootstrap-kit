@@ -47,7 +47,7 @@ const rollupConfig = {
 };
 
 if (!ESM) {
-  rollupConfig.output.name = 'kit';
+  rollupConfig.output.name = 'bootstrap';
 }
 
 module.exports = rollupConfig;

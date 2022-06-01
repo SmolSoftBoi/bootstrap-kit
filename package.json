@@ -74,7 +74,7 @@
   },
   "peerDependencies": {
     "@popperjs/core": "^2.9.2",
-    "bootstrap-icons": "^1.8.2"
+    "bootstrap-icons": "^1.8.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
@@ -98,7 +98,7 @@
     "glob": "^7.1.7",
     "globby": "^11.0.4",
     "hammer-simulator": "0.0.1",
-    "hugo-bin": "^0.87.0",
+    "hugo-bin": "^0.88.1",
     "ip": "^1.1.5",
     "jquery": "^3.6.0",
     "karma": "^6.3.4",

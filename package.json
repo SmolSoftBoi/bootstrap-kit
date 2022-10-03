@@ -70,7 +70,7 @@
     "template"
   ],
   "dependencies": {
-    "bootstrap": "^5.2.1"
+    "bootstrap": "^5.2.2"
   },
   "peerDependencies": {
     "@popperjs/core": "^2.9.2",

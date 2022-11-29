@@ -211,6 +211,7 @@
   clip: rect(0, auto, auto, 0);
 
   > iframe,
+  > img,
   > picture,
   > video {
     display: flex;

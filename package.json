@@ -98,7 +98,7 @@
     "glob": "^7.1.7",
     "globby": "^11.0.4",
     "hammer-simulator": "0.0.1",
-    "ip": "^1.1.5",
+    "ip": "^2.0.1",
     "jquery": "^3.6.0",
     "karma": "^6.3.4",
     "karma-browserstack-launcher": "1.4.0",
